@@ -1,0 +1,329 @@
+[gd_scene load_steps=21 format=3 uid="uid://c4ujdi8q3fv1v"]
+
+[ext_resource type="Texture2D" uid="uid://df4bltru215ad" path="res://newVersion/sprites/die.png" id="1_5cihv"]
+[ext_resource type="Texture2D" uid="uid://dticw7km2ma37" path="res://newVersion/sprites/dice_all_faces.png" id="2_ipw0w"]
+[ext_resource type="Texture2D" uid="uid://c2dcdnkwnc3am" path="res://newVersion/sprites/rotating_dice.png" id="3_14wer"]
+
+[sub_resource type="GDScript" id="GDScript_1gxl3"]
+script/source = "extends DiceBaseScript
+class_name OddDie
+
+@export var face_values : Array = [1, 2, 3, 4, 5, 6]
+@export var weighted_value : Array = [10,5,10,5,10,5]
+
+@onready var highlight: Sprite2D = $highlight
+@onready var dice_animations: AnimatedSprite2D = $diceAnimations
+
+var drag_check : bool = false
+var drag_timer : float = 0
+
+var ani_offset : int = 24
+
+var default_lerp = 8
+var drag_lerp_value = 16
+
+var skip_next_exit : bool = false
+
+func _process(delta: float) -> void:
+	
+	if not dragging:
+		dice_animations.global_position = dice_animations.position.lerp(Vector2(self.global_position.x + ani_offset,self.global_position.y + ani_offset), default_lerp * delta)
+	else:
+		dice_animations.global_position = dice_animations.position.lerp(Vector2(self.global_position.x + ani_offset,self.global_position.y + ani_offset), drag_lerp_value * delta)
+	
+	if drag_check:
+		drag_timer += 1 * delta
+		
+		if drag_timer >= .125:
+			drag()	
+	else:
+		drag_timer = 0
+	
+	if dragging:
+		global_position = Vector2(get_global_mouse_position().x - size.x/2, get_global_mouse_position().y - size.y/2)
+	else:
+		position = Vector2.ZERO
+		
+func play_roll_animation():
+	dice_animations.play(\"rotating\")
+
+func check_coll():
+	var rect = self.get_global_rect()
+	var mouse_position = self.get_global_mouse_position()
+	if rect.has_point(mouse_position):
+		_on_select_mouse_entered()
+	
+func _on_select_pressed() -> void:
+	if not Player.current_state == Player.player_states.ROLL and not dragging:
+	
+		selected = !selected
+				
+		if not selected:
+			animate_deselect(dice_animations, highlight)
+			
+			if Player.current_state == Player.player_states.DISCARD:
+				Player.remove_discard_list(self)
+			elif Player.current_state == Player.player_states.SELECTION:
+				Player.remove_score_list(self)
+			
+			print(\"Deselected : \", rolled_value)
+		else:
+			animate_select(dice_animations, highlight)
+			skip_next_exit = true
+			
+			if Player.current_state == Player.player_states.DISCARD:
+				Player.add_discard_list(self)
+			elif Player.current_state == Player.player_states.SELECTION:
+				Player.add_score_list(self)
+			
+			print(\"Selected : \", rolled_value)
+
+func _on_select_mouse_entered() -> void:
+	if not Player.current_state == Player.player_states.ROLL and not Player.dragging_dice:
+		animate_highlight(dice_animations, highlight)
+
+func _on_select_mouse_exited() -> void:
+	if not Player.current_state == Player.player_states.ROLL and not Player.dragging_dice and not dragging and not drag_timer >= .125:
+		
+		if skip_next_exit:
+			skip_next_exit = false
+		else:
+			animate_unhighlight(dice_animations, highlight)
+
+func reset_die():
+	selected = false
+	rolled_value = 0
+	_on_select_mouse_exited()
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if dice_animations.animation == \"rotating\":
+		dice_animations.play(\"faces\")
+		dice_animations.pause()
+		dice_animations.set_frame_and_progress(rolled_value, 0)
+
+func _on_select_button_down() -> void:
+	if not Player.dragging_dice:
+		drag_check = true
+
+func _on_select_button_up() -> void:
+	drag_check = false
+	
+	if dragging:
+		release_drag()
+	
+func drag():
+	dragging = true
+	Player.dragging_dice = true
+	z_index += 5
+	
+func release_drag():
+	var slots = get_parent().get_parent().get_children()
+	var closest = get_parent()
+	var index  = get_parent().get_index()
+	for s in slots:
+		var distance = global_position.distance_to(s.global_position)
+		
+		if distance < global_position.distance_to(closest.global_position):
+			closest = s
+			index = s.get_index()
+	
+	var replaced_node = closest.get_child(0)
+	replaced_node.reparent(get_parent())
+	replaced_node.position = Vector2.ZERO
+	reparent(slots[index])
+	
+	z_index -= 5
+	_on_select_mouse_exited()
+	dragging = false
+	Player.dragging_dice = false
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0jt0"]
+atlas = ExtResource("2_ipw0w")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1q2gj"]
+atlas = ExtResource("2_ipw0w")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0d7m"]
+atlas = ExtResource("2_ipw0w")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm810"]
+atlas = ExtResource("2_ipw0w")
+region = Rect2(120, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ngji"]
+atlas = ExtResource("2_ipw0w")
+region = Rect2(160, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mm41g"]
+atlas = ExtResource("2_ipw0w")
+region = Rect2(200, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unxl3"]
+atlas = ExtResource("2_ipw0w")
+region = Rect2(240, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8qi8"]
+atlas = ExtResource("3_14wer")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qo6w"]
+atlas = ExtResource("3_14wer")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlu41"]
+atlas = ExtResource("3_14wer")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13te8"]
+atlas = ExtResource("3_14wer")
+region = Rect2(144, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pfuo"]
+atlas = ExtResource("3_14wer")
+region = Rect2(192, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umiet"]
+atlas = ExtResource("3_14wer")
+region = Rect2(240, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qo0l"]
+atlas = ExtResource("3_14wer")
+region = Rect2(288, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tk8c7"]
+atlas = ExtResource("3_14wer")
+region = Rect2(336, 0, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_13ip4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0jt0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1q2gj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p0d7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm810")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ngji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mm41g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_unxl3")
+}],
+"loop": true,
+"name": &"faces",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8qi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlu41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13te8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pfuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umiet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk8c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8qi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlu41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13te8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pfuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umiet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk8c7")
+}],
+"loop": false,
+"name": &"rotating",
+"speed": 32.0
+}]
+
+[node name="odd_dice" type="Control"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 48.0
+offset_bottom = 48.0
+pivot_offset = Vector2(24, 24)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = SubResource("GDScript_1gxl3")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("../diceAnimations")
+update_position = false
+update_rotation = false
+
+[node name="highlight" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+top_level = true
+texture = ExtResource("1_5cihv")
+region_enabled = true
+region_rect = Rect2(40, 0, 40, 40)
+
+[node name="diceAnimations" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.818433, 0.287527, 0.154773, 1)
+top_level = true
+sprite_frames = SubResource("SpriteFrames_13ip4")
+animation = &"rotating"
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="diceAnimations"]
+remote_path = NodePath("../../highlight")
+
+[node name="select" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="animation_finished" from="diceAnimations" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="button_down" from="select" to="." method="_on_select_button_down"]
+[connection signal="button_up" from="select" to="." method="_on_select_button_up"]
+[connection signal="mouse_entered" from="select" to="." method="_on_select_mouse_entered"]
+[connection signal="mouse_exited" from="select" to="." method="_on_select_mouse_exited"]
+[connection signal="pressed" from="select" to="." method="_on_select_pressed"]

@@ -1,0 +1,289 @@
+[gd_scene load_steps=22 format=3 uid="uid://cf8u4t6o7aicm"]
+
+[ext_resource type="Texture2D" uid="uid://df4bltru215ad" path="res://newVersion/sprites/die.png" id="1_wlsi5"]
+[ext_resource type="Texture2D" uid="uid://dticw7km2ma37" path="res://newVersion/sprites/dice_all_faces.png" id="2_qf2iw"]
+[ext_resource type="Texture2D" uid="uid://c2dcdnkwnc3am" path="res://newVersion/sprites/rotating_dice.png" id="3_mtijm"]
+[ext_resource type="FontFile" uid="uid://ckxb0xryleu3y" path="res://fonts/GrapeSoda.ttf" id="4_riwhx"]
+
+[sub_resource type="GDScript" id="GDScript_1gxl3"]
+script/source = "extends Control
+class_name  BasicDie
+
+var face_values : Array = [1, 2, 3, 4, 5, 6]
+var rolled_value : int = 0
+var selected : bool = false
+var tween : Tween
+@onready var highlight: Sprite2D = $highlight
+@onready var dice_animations: AnimatedSprite2D = $diceAnimations
+
+
+
+func _process(delta: float) -> void:
+	#animated_sprite_2d.set_frame_and_progress(rolled_value, 0)
+	pass
+
+func roll():
+	rolled_value = face_values.pick_random()
+	dice_animations.play(\"rotating\")
+	$value.text = str(rolled_value)
+	print(\"Rolled Value : \", rolled_value)
+	
+func _on_select_pressed() -> void:
+	selected = !selected
+	
+	if not selected:
+		_on_select_mouse_exited()
+		
+		Player.remove_discard_list(self)
+		
+		print(\"Deselected : \", rolled_value)
+	else:
+		_on_select_mouse_entered()
+		
+		Player.add_discard_list(self)
+
+		print(\"Selected : \", rolled_value)
+
+func _on_select_mouse_entered() -> void:
+	if tween:
+		tween.kill()
+		
+	tween = create_tween()
+	
+	tween.parallel().tween_property(self, \"scale\", Vector2(1.25,1.25), .35).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property($highlight, \"modulate:a\", 1, .35)
+
+func _on_select_mouse_exited() -> void:
+	if not selected:
+		if tween:
+			tween.kill()
+			
+		tween = create_tween()
+		
+		tween.parallel().tween_property(self, \"scale\", Vector2(1,1), .35).set_trans(Tween.TRANS_BACK)
+		tween.parallel().tween_property($highlight, \"modulate:a\", 0, .35)
+
+func reset_die():
+	selected = false
+	rolled_value = 0
+	_on_select_mouse_exited()
+	$value.text = \"?\"
+#
+#func _on_animated_sprite_2d_animation_finished() -> void:
+	#if animated_sprite_2d.animation == \"rotating\":
+		#animated_sprite_2d.play(\"faces\")
+		#animated_sprite_2d.pause()
+		#animated_sprite_2d.set_frame_and_progress(rolled_value, 0)
+#
+#func animate_dice():
+	#
+	#var tween = create_tween()
+	#
+	#tween.tween_property($AnimatedSprite2D, \"offset:y\", -10, .75).set_trans(Tween.TRANS_BACK)
+	#tween.tween_property($AnimatedSprite2D, \"offset:y\", 0, .75).set_trans(Tween.TRANS_BACK)
+	#
+	#tween.set_loops()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0jt0"]
+atlas = ExtResource("2_qf2iw")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1q2gj"]
+atlas = ExtResource("2_qf2iw")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0d7m"]
+atlas = ExtResource("2_qf2iw")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm810"]
+atlas = ExtResource("2_qf2iw")
+region = Rect2(120, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ngji"]
+atlas = ExtResource("2_qf2iw")
+region = Rect2(160, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mm41g"]
+atlas = ExtResource("2_qf2iw")
+region = Rect2(200, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unxl3"]
+atlas = ExtResource("2_qf2iw")
+region = Rect2(240, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8qi8"]
+atlas = ExtResource("3_mtijm")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qo6w"]
+atlas = ExtResource("3_mtijm")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlu41"]
+atlas = ExtResource("3_mtijm")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13te8"]
+atlas = ExtResource("3_mtijm")
+region = Rect2(144, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pfuo"]
+atlas = ExtResource("3_mtijm")
+region = Rect2(192, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umiet"]
+atlas = ExtResource("3_mtijm")
+region = Rect2(240, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qo0l"]
+atlas = ExtResource("3_mtijm")
+region = Rect2(288, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tk8c7"]
+atlas = ExtResource("3_mtijm")
+region = Rect2(336, 0, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_13ip4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0jt0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1q2gj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p0d7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm810")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ngji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mm41g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_unxl3")
+}],
+"loop": true,
+"name": &"faces",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8qi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlu41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13te8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pfuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umiet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk8c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8qi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlu41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13te8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pfuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umiet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk8c7")
+}],
+"loop": false,
+"name": &"rotating",
+"speed": 24.0
+}]
+
+[node name="basic_dice" type="Control"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 48.0
+offset_bottom = 48.0
+pivot_offset = Vector2(24, 24)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = SubResource("GDScript_1gxl3")
+
+[node name="die" type="Sprite2D" parent="."]
+visible = false
+top_level = true
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("1_wlsi5")
+offset = Vector2(24, 24)
+region_enabled = true
+region_rect = Rect2(0, 0, 40, 40)
+
+[node name="highlight" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(24, 24)
+texture = ExtResource("1_wlsi5")
+region_enabled = true
+region_rect = Rect2(40, 0, 40, 40)
+
+[node name="diceAnimations" type="AnimatedSprite2D" parent="."]
+position = Vector2(24, 24)
+scale = Vector2(1e-05, 1e-05)
+sprite_frames = SubResource("SpriteFrames_13ip4")
+animation = &"rotating"
+
+[node name="value" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 13.0
+offset_top = 12.0
+offset_right = 36.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("4_riwhx")
+theme_override_font_sizes/font_size = 16
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="select" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="animation_finished" from="diceAnimations" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="mouse_entered" from="select" to="." method="_on_select_mouse_entered"]
+[connection signal="mouse_exited" from="select" to="." method="_on_select_mouse_exited"]
+[connection signal="pressed" from="select" to="." method="_on_select_pressed"]

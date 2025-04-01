@@ -1,0 +1,184 @@
+[gd_scene load_steps=5 format=3 uid="uid://bj7u8vcs5pvhh"]
+
+[ext_resource type="Script" path="res://3rdAttempt/player.gd" id="1_mmsx7"]
+[ext_resource type="Shader" path="res://3rdAttempt/scenes/background.gdshader" id="2_hj8m4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bbkav"]
+shader = ExtResource("2_hj8m4")
+shader_parameter/color1 = Color(0.230315, 0.230315, 0.230315, 1)
+shader_parameter/color2 = Color(0.517185, 0.517184, 0.517184, 1)
+shader_parameter/square_size = 250.0
+shader_parameter/speed = -32.0
+shader_parameter/diagonal = true
+shader_parameter/skew = 0.35
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fm52v"]
+bg_color = Color(0.201527, 0.201527, 0.201526, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.172833, 0.172833, 0.172833, 1)
+corner_radius_top_left = 128
+corner_radius_top_right = 128
+corner_radius_bottom_right = 128
+corner_radius_bottom_left = 128
+anti_aliasing = false
+
+[node name="Player" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mmsx7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -5
+material = SubResource("ShaderMaterial_bbkav")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 102.0
+offset_top = 83.0
+offset_right = -102.0
+offset_bottom = -83.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fm52v")
+
+[node name="dice_bag" type="Node2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+
+[node name="dice_hand" type="HBoxContainer" parent="."]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -154.0
+offset_top = 28.0
+offset_right = 154.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="dice_place_holder" type="Control" parent="dice_hand"]
+z_as_relative = false
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="dice_place_holder2" type="Control" parent="dice_hand"]
+z_as_relative = false
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="dice_place_holder3" type="Control" parent="dice_hand"]
+z_as_relative = false
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="dice_place_holder4" type="Control" parent="dice_hand"]
+z_as_relative = false
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="dice_place_holder5" type="Control" parent="dice_hand"]
+z_as_relative = false
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="dice_place_holder6" type="Control" parent="dice_hand"]
+z_as_relative = false
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="options" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.5
+offset_top = 90.0
+offset_right = 33.5
+offset_bottom = 226.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="draw" type="Button" parent="options"]
+layout_mode = 2
+text = "Draw
+"
+
+[node name="discard" type="Button" parent="options"]
+layout_mode = 2
+text = "Discard
+"
+
+[node name="roll" type="Button" parent="options"]
+layout_mode = 2
+text = "Roll"
+
+[node name="score" type="Button" parent="options"]
+layout_mode = 2
+text = "Score"
+
+[node name="score" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 613.0
+offset_top = 90.5
+offset_right = 763.0
+offset_bottom = 140.5
+grow_vertical = 2
+
+[node name="scoreCon" type="PanelContainer" parent="score"]
+layout_mode = 2
+
+[node name="scoreLabel" type="Label" parent="score/scoreCon"]
+layout_mode = 2
+text = " Score : "
+
+[node name="selectedscoreCon" type="PanelContainer" parent="score"]
+layout_mode = 2
+
+[node name="selectedscoreLabel" type="Label" parent="score/selectedscoreCon"]
+layout_mode = 2
+text = " + Score : "
+
+[connection signal="pressed" from="options/draw" to="." method="_on_draw_pressed"]
+[connection signal="pressed" from="options/discard" to="." method="_on_discard_pressed"]
+[connection signal="pressed" from="options/roll" to="." method="_on_roll_pressed"]
+[connection signal="pressed" from="options/score" to="." method="_on_score_pressed"]

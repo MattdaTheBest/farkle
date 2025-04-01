@@ -1,0 +1,354 @@
+[gd_scene load_steps=8 format=3 uid="uid://bap46fbrdgv5i"]
+
+[ext_resource type="PackedScene" uid="uid://jwuvyt77ga3e" path="res://newVersion/player.tscn" id="1_cclql"]
+[ext_resource type="FontFile" uid="uid://ckxb0xryleu3y" path="res://fonts/GrapeSoda.ttf" id="1_jr5re"]
+[ext_resource type="Script" path="res://newVersion/scripts/world_scene.gd" id="1_xhbt5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xyoq"]
+bg_color = Color(0.682353, 0.137255, 0.203922, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 4.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n0rmi"]
+bg_color = Color(0.301961, 0.396078, 0.705882, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 4.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3ryh"]
+bg_color = Color(0.870588, 0.396078, 0.705882, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 4.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vfrif"]
+bg_color = Color(0.828763, 0.452043, 0.22655, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 4.0
+anti_aliasing = false
+
+[node name="World_scene" type="Node2D" groups=["world"]]
+script = ExtResource("1_xhbt5")
+
+[node name="player" parent="." instance=ExtResource("1_cclql")]
+
+[node name="ui" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="basicButtons" type="HBoxContainer" parent="ui/Control"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -258.0
+offset_top = -56.0
+offset_right = 258.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="drawHand" type="Button" parent="ui/Control/basicButtons"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+theme_override_font_sizes/font_size = 16
+text = "Draw Dice!"
+
+[node name="rollHand" type="Button" parent="ui/Control/basicButtons"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+theme_override_font_sizes/font_size = 16
+text = "Roll Dice!"
+
+[node name="discard" type="Button" parent="ui/Control/basicButtons"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+theme_override_font_sizes/font_size = 16
+text = "Discard Dice!"
+
+[node name="score" type="Button" parent="ui/Control/basicButtons"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+theme_override_font_sizes/font_size = 16
+text = "Score Dice!"
+
+[node name="scoreandpass" type="Button" parent="ui/Control/basicButtons"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Score & Pass!"
+
+[node name="temp_dice_holder" type="HBoxContainer" parent="ui/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -85.0
+offset_right = 24.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -173.0
+offset_right = 175.0
+offset_bottom = -105.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="mult" type="PanelContainer" parent="ui/Control/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0xyoq")
+
+[node name="multLabel" type="Label" parent="ui/Control/HBoxContainer/VBoxContainer/mult"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Mult : 1"
+
+[node name="value" type="PanelContainer" parent="ui/Control/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_n0rmi")
+
+[node name="scoreLabel" type="Label" parent="ui/Control/HBoxContainer/VBoxContainer/value"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Score : 0"
+
+[node name="Label" type="Label" parent="ui/Control/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "X"
+
+[node name="value" type="PanelContainer" parent="ui/Control/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_n0rmi")
+
+[node name="roundScore" type="Label" parent="ui/Control/HBoxContainer/value"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "R Score : 0"
+
+[node name="Label2" type="Label" parent="ui/Control/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "X"
+
+[node name="farkles" type="PanelContainer" parent="ui/Control/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e3ryh")
+
+[node name="farkleLabel" type="Label" parent="ui/Control/HBoxContainer/farkles"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Farkles : 1"
+
+[node name="Label3" type="Label" parent="ui/Control/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "="
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ui/Control/HBoxContainer"]
+custom_minimum_size = Vector2(175, 0)
+layout_mode = 2
+
+[node name="goalScore2" type="PanelContainer" parent="ui/Control/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vfrif")
+
+[node name="goalscorelLabel" type="Label" parent="ui/Control/HBoxContainer/VBoxContainer2/goalScore2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Goal : 500"
+
+[node name="overallScore" type="PanelContainer" parent="ui/Control/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vfrif")
+
+[node name="overallscorelLabel" type="Label" parent="ui/Control/HBoxContainer/VBoxContainer2/overallScore"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Overall Score : 0"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ui/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -81.0
+offset_right = 20.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="ui/Control/HBoxContainer2"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ui/Control/HBoxContainer2/PanelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Bust!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer3" type="VBoxContainer" parent="ui/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -363.0
+offset_top = -34.0
+offset_right = -263.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="discards" type="PanelContainer" parent="ui/Control/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0xyoq")
+
+[node name="discards_label" type="Label" parent="ui/Control/HBoxContainer3/discards"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Discards : 5"
+
+[node name="handsplayed" type="PanelContainer" parent="ui/Control/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_n0rmi")
+
+[node name="handsplayedLabel" type="Label" parent="ui/Control/HBoxContainer3/handsplayed"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Rounds : 3"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ui/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -81.0
+offset_right = 20.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="ui/Control/HBoxContainer4"]
+visible = false
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ui/Control/HBoxContainer4/PanelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Winner!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="reset" type="Button" parent="ui/Control/HBoxContainer4"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_fonts/font = ExtResource("1_jr5re")
+text = "Reset"
+
+[connection signal="pressed" from="ui/Control/basicButtons/drawHand" to="." method="_on_draw_hand_pressed"]
+[connection signal="pressed" from="ui/Control/basicButtons/rollHand" to="." method="_on_roll_hand_pressed"]
+[connection signal="pressed" from="ui/Control/basicButtons/discard" to="." method="_on_discard_pressed"]
+[connection signal="pressed" from="ui/Control/basicButtons/score" to="." method="_on_score_pressed"]
+[connection signal="pressed" from="ui/Control/basicButtons/scoreandpass" to="." method="_on_scoreandpass_pressed"]
+[connection signal="pressed" from="ui/Control/HBoxContainer4/reset" to="." method="_on_reset_pressed"]

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DiceBase" load_steps=2 format=3 uid="uid://n3pi08s3rx2c"]
+
+[ext_resource type="Script" path="res://3rdAttempt/dice/dice/scripts/diceResource.gd" id="1_18xft"]
+
+[resource]
+script = ExtResource("1_18xft")
+name = "simple"
+sides = 6
+special_rule = ""

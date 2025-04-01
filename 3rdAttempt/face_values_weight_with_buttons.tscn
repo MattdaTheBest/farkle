@@ -1,0 +1,250 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckj5k3d4pyqkq"]
+
+[ext_resource type="PackedScene" uid="uid://cdp1dpo4t8ntb" path="res://3rdAttempt/button.tscn" id="1_86we4"]
+[ext_resource type="Script" path="res://3rdAttempt/face_values_weight_with_buttons.gd" id="1_hfot8"]
+[ext_resource type="PackedScene" uid="uid://cls0wakep4jwl" path="res://3rdAttempt/scenes/unrolled_face.tscn" id="2_m4328"]
+
+[node name="face_values_weight_with_buttons" type="VBoxContainer"]
+custom_minimum_size = Vector2(64, 32)
+offset_right = 218.0
+offset_bottom = 212.0
+mouse_filter = 2
+theme_override_constants/separation = 4
+script = ExtResource("1_hfot8")
+test = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(86, 0)
+layout_mode = 2
+
+[node name="face" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer/face" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer/face" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer/face2" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer/face2" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer/face3" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer/face3" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer/face4" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer/face4" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer/face5" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer/face5" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer/face6" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer/face6" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(86, 0)
+layout_mode = 2
+
+[node name="face" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer2/face" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer2/face" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer2/face2" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer2/face2" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer2/face3" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer2/face3" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer2/face4" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer2/face4" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer2/face5" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer2/face5" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer2/face6" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer2/face6" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(86, 0)
+layout_mode = 2
+
+[node name="face" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer3/face" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer3/face" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer3/face2" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer3/face2" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer3/face3" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer3/face3" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer3/face4" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer3/face4" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer3/face5" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer3/face5" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer3/face6" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer3/face6" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(86, 0)
+layout_mode = 2
+
+[node name="face" type="HBoxContainer" parent="HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer4/face" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer4/face" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer4/face2" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer4/face2" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer4/face3" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer4/face3" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer4/face4" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer4/face4" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer4/face5" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer4/face5" instance=ExtResource("2_m4328")]
+layout_mode = 2
+
+[node name="face6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+
+[node name="button" parent="HBoxContainer/VBoxContainer4/face6" instance=ExtResource("1_86we4")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="HBoxContainer/VBoxContainer4/face6" instance=ExtResource("2_m4328")]
+layout_mode = 2

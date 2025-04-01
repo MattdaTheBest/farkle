@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://cdp1dpo4t8ntb"]
+
+[ext_resource type="Script" path="res://3rdAttempt/button.gd" id="1_8ft0h"]
+[ext_resource type="Texture2D" uid="uid://j8iggexoady" path="res://3rdAttempt/dice/dice/sprites/button.png" id="1_582av"]
+[ext_resource type="Texture2D" uid="uid://duoyws88f6165" path="res://3rdAttempt/dice/dice/sprites/pressed_button.png" id="3_40wbu"]
+[ext_resource type="Texture2D" uid="uid://dlvs33qqtpk60" path="res://3rdAttempt/dice/dice/sprites/button_hovered.png" id="3_xqraq"]
+[ext_resource type="Texture2D" uid="uid://bnuo3ykhebdjv" path="res://3rdAttempt/dice/dice/sprites/pressed_button2.png" id="5_jcaxg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ljv7w"]
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+
+[node name="button" type="Control"]
+custom_minimum_size = Vector2(17, 32)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_8ft0h")
+
+[node name="up" type="TextureButton" parent="."]
+layout_mode = 2
+offset_right = 17.0
+offset_bottom = 14.0
+pivot_offset = Vector2(8.5, 7)
+texture_normal = ExtResource("1_582av")
+texture_pressed = ExtResource("3_40wbu")
+texture_hover = ExtResource("3_xqraq")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = -1
+custom_minimum_size = Vector2(11, 20)
+layout_mode = 2
+offset_left = 3.0
+offset_top = 6.0
+offset_right = 14.0
+offset_bottom = 26.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ljv7w")
+
+[node name="down" type="TextureButton" parent="."]
+layout_mode = 2
+offset_top = 18.0
+offset_right = 17.0
+offset_bottom = 32.0
+pivot_offset = Vector2(8.5, 7)
+texture_normal = ExtResource("1_582av")
+texture_pressed = ExtResource("5_jcaxg")
+texture_hover = ExtResource("3_xqraq")
+flip_v = true
+
+[connection signal="pressed" from="up" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="down" to="." method="_on_texture_button_2_pressed"]

@@ -1,0 +1,617 @@
+[gd_scene load_steps=30 format=3 uid="uid://cua4cyg1ot4os"]
+
+[ext_resource type="Texture2D" uid="uid://df4bltru215ad" path="res://newVersion/sprites/die.png" id="1_b5e4u"]
+[ext_resource type="Shader" path="res://3rdAttempt/dice/dice/highLightShader.gdshader" id="2_463vw"]
+[ext_resource type="Texture2D" uid="uid://ujctx57h1i1t" path="res://newVersion/sprites/8_side_die_faces.png" id="2_hyp0b"]
+[ext_resource type="Script" path="res://unrolled_face_name.gd" id="2_qm7f1"]
+[ext_resource type="Texture2D" uid="uid://c2dcdnkwnc3am" path="res://newVersion/sprites/rotating_dice.png" id="3_golai"]
+[ext_resource type="Texture2D" uid="uid://nd1fgukfyvik" path="res://newVersion/sprites/unrolled_dice.png" id="4_xd6nm"]
+[ext_resource type="PackedScene" uid="uid://cls0wakep4jwl" path="res://3rdAttempt/scenes/unrolled_face.tscn" id="5_7i4im"]
+[ext_resource type="FontFile" uid="uid://ckxb0xryleu3y" path="res://fonts/GrapeSoda.ttf" id="7_ch7bl"]
+
+[sub_resource type="GDScript" id="GDScript_1gxl3"]
+script/source = "extends DiceBaseScript
+class_name Eighter
+
+@export var dice_name : String
+@export var face_values : Array = [1, 2, 3, 4, 5, 6, 1, 2]
+@export var weighted_value : Array = [10,10,10,10,10,10,10,10]
+
+@onready var highlight: Sprite2D = $highlight
+@onready var dice_animations: AnimatedSprite2D = $Node2D/diceAnimations
+@onready var face_values_weights: VBoxContainer = $face_values_weights
+@onready var unrolled_face_name: Node2D = $Node2D/diceAnimations/Node2D
+@onready var hover_area: Control = $Node2D/diceAnimations/Node2D/hover_area
+
+
+var drag_check : bool = false
+var drag_timer : float = 0
+
+var ani_offset : int = 24
+
+var default_lerp = 8
+var drag_lerp_value = 32
+
+var skip_next_exit : bool = false
+
+var hovering : bool = false
+
+func _ready() -> void:
+	for w in weighted_value:
+		full_weight += w
+
+func _process(delta: float) -> void:
+		
+	if hovering != check_coll():
+		if not dragging:
+			if not hovering:
+				if not Player.current_state == Player.player_states.ROLL and not dragging and not Player.dragging_dice:
+					hovering = true
+					
+					appear_name(dice_name, unrolled_face_name)
+					
+					if not selected:
+						animate_highlight(dice_animations, highlight)
+			else:
+				if not Player.current_state == Player.player_states.ROLL and not dragging and not Player.dragging_dice:
+					hovering = false
+					
+					disappear_name(unrolled_face_name)
+					
+					if not selected:
+						animate_unhighlight(dice_animations, highlight)
+					
+					await disappear_unrolled_dice(face_values_weights,face_values)
+					
+					disappear_unrolled_dice(face_values_weights,face_values)
+		
+		hovering = check_coll()
+	
+	if hovering:
+		
+		if Player.current_state == Player.player_states.DISCARD:
+			
+			if Input.is_action_just_pressed(\"mouseRight\"):
+				if unrolled_state == stats_unrolled.opening:
+					disappear_unrolled_dice(face_values_weights, face_values)
+				else:
+					appear_unrolled_dice(face_values_weights,face_values, weighted_value, dice_name, dice_animations)
+					
+			if Input.is_action_pressed(\"mouseLeft\") and not Player.dragging_dice:
+				drag_timer += 1 * delta
+				
+				if drag_timer > 0.25 and not dragging:
+					dragging = true
+					
+					Player.dragging_dice = true
+					
+					animate_select(dice_animations, highlight)
+					
+					if unrolled_state == stats_unrolled.opening:
+						disappear_unrolled_dice(face_values_weights, face_values)
+				
+			if Input.is_action_just_released(\"mouseLeft\"):
+				drag_timer = 0
+				
+				if dragging:
+					
+					Player.dragging_dice = false
+						
+					dragging = false
+					
+					animate_unhighlight(dice_animations, highlight)
+					
+					if dice_animations.position.distance_to(position) > 50:
+						
+						disappear_name(unrolled_face_name)
+		
+		else:
+			
+			drag_timer = 0
+			
+			dragging = false
+					
+	if dragging:
+		global_position = Vector2(get_global_mouse_position().x - size.x/2, get_global_mouse_position().y - size.y/2)
+		dice_animations.global_position = dice_animations.position.lerp(Vector2(self.global_position.x + ani_offset,self.global_position.y + ani_offset), drag_lerp_value * delta)
+		unrolled_face_name.global_position = unrolled_face_name.position.lerp(Vector2(self.global_position.x + self.size.x/2 - unrolled_face_name.get_child(0).size.x/2,self.global_position.y - 32), drag_lerp_value * delta)
+	elif not disappearing and not appearing:
+		position = Vector2.ZERO
+		dice_animations.global_position = dice_animations.position.lerp(Vector2(self.global_position.x + ani_offset,self.global_position.y + ani_offset), default_lerp * delta)
+		unrolled_face_name.global_position = unrolled_face_name.position.lerp(Vector2(self.global_position.x + self.size.x/2 - unrolled_face_name.get_child(0).size.x/2,self.global_position.y - 32), default_lerp * delta)
+	elif appearing:
+		dice_animations.position = position
+	
+	
+	if Player.dragging_dice:
+		
+		calculate_drag_positions()
+
+func check_coll():
+	var rect = hover_area.get_global_rect()
+	var mouse_position = hover_area.get_global_mouse_position()
+	if rect.has_point(mouse_position):
+		return true
+	else:
+		return false
+	
+func _on_select_pressed() -> void:
+	if not Player.current_state == Player.player_states.ROLL and hovering and not dragging:
+	
+		selected = !selected
+				
+		if not selected:
+			
+			animate_deselect(dice_animations, highlight)
+			
+			if Player.current_state == Player.player_states.DISCARD:
+				Player.remove_discard_list(self)
+			elif Player.current_state == Player.player_states.SELECTION:
+				Player.remove_score_list(self)
+			
+		elif selected:
+			
+			animate_select(dice_animations, highlight)
+			
+			if Player.current_state == Player.player_states.DISCARD:
+				Player.add_discard_list(self)
+			elif Player.current_state == Player.player_states.SELECTION:
+				Player.add_score_list(self)
+#
+func _on_select_mouse_entered() -> void:
+	pass
+	#if not Player.current_state == Player.player_states.ROLL and not dragging and not Player.dragging_dice:
+		#hovering = true
+		#
+		#appear_name(dice_name, unrolled_face_name)
+		#
+		#if not selected:
+			#animate_highlight(dice_animations, highlight)
+
+func _on_select_mouse_exited() -> void:
+	pass
+	#if not Player.current_state == Player.player_states.ROLL and not dragging and not Player.dragging_dice:
+		#hovering = false
+		#
+		#disappear_name(unrolled_face_name)
+		#
+		#if not selected:
+			#animate_unhighlight(dice_animations, highlight)
+		#
+		#await disappear_unrolled_dice(face_values_weights,face_values)
+		#
+		#disappear_unrolled_dice(face_values_weights,face_values)
+		
+func reset_die():
+	selected = false
+	rolled_value = 0
+	
+	animate_unhighlight(dice_animations, highlight)
+
+#func _on_select_button_down() -> void:
+	#Player.dragging_dice = true
+	#drag_check = true
+#
+#func _on_select_button_up() -> void:
+	#drag_check = false
+	#drag_timer = 0
+	#
+	#if not dragging:
+		#Player.dragging_dice = false
+	#
+	##
+	##if dragging:
+		##release_drag()
+	#
+#func drag():
+#
+	#dragging = true
+	#Player.dragging_dice = true
+	#
+	#disappear_unrolled_dice(face_values_weights)
+	#animate_highlight(dice_animations, highlight)
+	#
+func calculate_drag_positions():
+	var slots = get_parent().get_parent().get_children()
+	var closest = get_parent()
+	var index  = get_parent().get_index()
+	for s in slots:
+		var distance = global_position.distance_to(s.global_position)
+		
+		if distance < global_position.distance_to(closest.global_position):
+			closest = s
+			index = s.get_index()
+		
+	var replaced_node = closest.get_child(0)
+	
+	if replaced_node != null:
+		replaced_node.reparent(get_parent())
+		replaced_node.position = Vector2.ZERO
+		
+	reparent(slots[index])
+	
+#func release_drag():
+	#dragging = false
+	#drag_check = false
+	#Player.dragging_dice = false
+	#selected = !selected
+	##_on_select_mouse_exited()
+	#animate_deselect(dice_animations, highlight)
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rma3p"]
+resource_local_to_scene = true
+shader = ExtResource("2_463vw")
+shader_parameter/clr = Color(1, 1, 1, 0)
+shader_parameter/type = 2
+shader_parameter/thickness = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_innmr"]
+atlas = ExtResource("2_hyp0b")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7yon"]
+atlas = ExtResource("2_hyp0b")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyggw"]
+atlas = ExtResource("2_hyp0b")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yd6b5"]
+atlas = ExtResource("2_hyp0b")
+region = Rect2(120, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s10dy"]
+atlas = ExtResource("2_hyp0b")
+region = Rect2(160, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qgq6"]
+atlas = ExtResource("2_hyp0b")
+region = Rect2(200, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uieqn"]
+atlas = ExtResource("2_hyp0b")
+region = Rect2(240, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nuef"]
+atlas = ExtResource("2_hyp0b")
+region = Rect2(280, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwran"]
+atlas = ExtResource("2_hyp0b")
+region = Rect2(320, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8qi8"]
+atlas = ExtResource("3_golai")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qo6w"]
+atlas = ExtResource("3_golai")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlu41"]
+atlas = ExtResource("3_golai")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13te8"]
+atlas = ExtResource("3_golai")
+region = Rect2(144, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pfuo"]
+atlas = ExtResource("3_golai")
+region = Rect2(192, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umiet"]
+atlas = ExtResource("3_golai")
+region = Rect2(240, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qo0l"]
+atlas = ExtResource("3_golai")
+region = Rect2(288, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tk8c7"]
+atlas = ExtResource("3_golai")
+region = Rect2(336, 0, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_13ip4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_innmr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i7yon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyggw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yd6b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s10dy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qgq6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uieqn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5nuef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwran")
+}],
+"loop": true,
+"name": &"faces",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8qi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlu41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13te8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pfuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umiet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk8c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8qi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlu41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13te8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pfuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umiet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qo0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk8c7")
+}],
+"loop": false,
+"name": &"rotating",
+"speed": 32.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xlc0f"]
+bg_color = Color(8.90419e-07, 0.291049, 0.352438, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[node name="basic_dice" type="Control"]
+z_as_relative = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 48.0
+offset_bottom = 48.0
+pivot_offset = Vector2(24, 24)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+script = SubResource("GDScript_1gxl3")
+dice_name = "Eighter"
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("../Node2D/diceAnimations")
+update_position = false
+update_rotation = false
+update_scale = false
+
+[node name="highlight" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+top_level = true
+position = Vector2(24, 24)
+texture = ExtResource("1_b5e4u")
+region_enabled = true
+region_rect = Rect2(40, 0, 40, 40)
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="diceAnimations" type="AnimatedSprite2D" parent="Node2D"]
+top_level = true
+z_as_relative = false
+material = SubResource("ShaderMaterial_rma3p")
+position = Vector2(24, 24)
+sprite_frames = SubResource("SpriteFrames_13ip4")
+animation = &"faces"
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node2D/diceAnimations"]
+remote_path = NodePath("../../../highlight")
+
+[node name="Node2D" type="Node2D" parent="Node2D/diceAnimations"]
+top_level = true
+position = Vector2(-24, -24)
+
+[node name="PanelContainer" type="PanelContainer" parent="Node2D/diceAnimations/Node2D"]
+z_index = -1
+offset_right = 86.0
+offset_bottom = 24.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(43, 12)
+theme_override_styles/panel = SubResource("StyleBoxFlat_xlc0f")
+script = ExtResource("2_qm7f1")
+
+[node name="Label" type="Label" parent="Node2D/diceAnimations/Node2D/PanelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("7_ch7bl")
+theme_override_font_sizes/font_size = 16
+text = "   10% "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hover_area" type="Control" parent="Node2D/diceAnimations/Node2D"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 72.0
+offset_bottom = 72.0
+mouse_filter = 2
+
+[node name="unfoldedVersion" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(24, -80)
+texture = ExtResource("4_xd6nm")
+
+[node name="select" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="face_values_weights" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 0
+offset_left = 8.0
+offset_top = -256.0
+offset_right = 364.0
+offset_bottom = 32.0
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="face_values_weights"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="face_values_weights/HBoxContainer"]
+custom_minimum_size = Vector2(86, 0)
+layout_mode = 2
+
+[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face7" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face8" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="face_values_weights/HBoxContainer"]
+layout_mode = 2
+
+[node name="unrolled_face" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="unrolled_face2" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="face_values_weights/HBoxContainer"]
+layout_mode = 2
+
+[node name="unrolled_face" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="unrolled_face2" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="face_values_weights/HBoxContainer"]
+layout_mode = 2
+
+[node name="unrolled_face" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="unrolled_face2" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+layout_mode = 2
+
+[connection signal="animation_finished" from="Node2D/diceAnimations" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="button_down" from="select" to="." method="_on_select_button_down"]
+[connection signal="button_up" from="select" to="." method="_on_select_button_up"]
+[connection signal="mouse_entered" from="select" to="." method="_on_select_mouse_entered"]
+[connection signal="mouse_exited" from="select" to="." method="_on_select_mouse_exited"]
+[connection signal="pressed" from="select" to="." method="_on_select_pressed"]

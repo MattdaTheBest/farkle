@@ -1,0 +1,107 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf8u4t6o7aicm"]
+
+[ext_resource type="Texture2D" uid="uid://df4bltru215ad" path="res://newVersion/sprites/die.png" id="2_any7m"]
+[ext_resource type="FontFile" uid="uid://ckxb0xryleu3y" path="res://fonts/GrapeSoda.ttf" id="3_nty74"]
+
+[sub_resource type="GDScript" id="GDScript_1gxl3"]
+script/source = "extends Control
+class_name  BasicDie
+
+var face_values : Array = [1, 2, 3, 4, 5, 6]
+var rolled_value : int = 0
+var selected : bool = false
+var tween : Tween
+
+func roll():
+	rolled_value = face_values.pick_random()
+	$value.text = str(rolled_value)
+	print(\"Rolled Value : \", rolled_value)
+	
+func _on_select_pressed() -> void:
+	selected = !selected
+	
+	if not selected:
+		_on_select_mouse_exited()
+		Player.deselect_die(self)
+		print(\"Delected : \", rolled_value)
+	else:
+		_on_select_mouse_entered()
+		Player.select_die(self)
+		print(\"Selected : \", rolled_value)
+		
+func _on_select_mouse_entered() -> void:
+	if tween:
+		tween.kill()
+		
+	tween = create_tween()
+	
+	tween.parallel().tween_property(self, \"scale\", Vector2(1.25,1.25), .35).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property($highlight, \"modulate:a\", 1, .35)
+
+func _on_select_mouse_exited() -> void:
+	if not selected:
+		if tween:
+			tween.kill()
+			
+		tween = create_tween()
+		
+		tween.parallel().tween_property(self, \"scale\", Vector2(1,1), .35).set_trans(Tween.TRANS_BACK)
+		tween.parallel().tween_property($highlight, \"modulate:a\", 0, .35)
+
+func reset_die():
+	selected = false
+	rolled_value = 0
+	_on_select_mouse_exited()
+	$value.text = \"?\"
+"
+
+[node name="basic_dice" type="Control"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 48.0
+offset_bottom = 48.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(24, 24)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = SubResource("GDScript_1gxl3")
+
+[node name="die" type="Sprite2D" parent="."]
+texture = ExtResource("2_any7m")
+offset = Vector2(24, 24)
+region_enabled = true
+region_rect = Rect2(0, 0, 40, 40)
+
+[node name="highlight" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(24, 24)
+texture = ExtResource("2_any7m")
+region_enabled = true
+region_rect = Rect2(40, 0, 40, 40)
+
+[node name="value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 12.0
+offset_right = 36.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("3_nty74")
+theme_override_font_sizes/font_size = 16
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="select" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="mouse_entered" from="select" to="." method="_on_select_mouse_entered"]
+[connection signal="mouse_exited" from="select" to="." method="_on_select_mouse_exited"]
+[connection signal="pressed" from="select" to="." method="_on_select_pressed"]
