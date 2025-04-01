@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj7u8vcs5pvhh"]
+[gd_scene load_steps=6 format=3 uid="uid://bj7u8vcs5pvhh"]
 
 [ext_resource type="Script" path="res://3rdAttempt/player.gd" id="1_mmsx7"]
 [ext_resource type="Shader" path="res://3rdAttempt/scenes/background.gdshader" id="2_hj8m4"]
+[ext_resource type="PackedScene" uid="uid://b3hb7d28tn5qo" path="res://score_board.tscn" id="3_8frt5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bbkav"]
 shader = ExtResource("2_hj8m4")
@@ -178,7 +179,15 @@ layout_mode = 2
 layout_mode = 2
 text = " + Score : "
 
+[node name="Score_Board" parent="." instance=ExtResource("3_8frt5")]
+offset_left = 134.0
+offset_top = 169.0
+offset_right = 134.0
+offset_bottom = 169.0
+
 [connection signal="pressed" from="options/draw" to="." method="_on_draw_pressed"]
 [connection signal="pressed" from="options/discard" to="." method="_on_discard_pressed"]
 [connection signal="pressed" from="options/roll" to="." method="_on_roll_pressed"]
 [connection signal="pressed" from="options/score" to="." method="_on_score_pressed"]
+
+[editable path="Score_Board"]

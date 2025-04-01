@@ -37,6 +37,8 @@ var dragging_dice : bool = false
 @onready var discard_butt: Button = $options/discard
 @onready var roll_butt: Button = $options/roll
 @onready var score_butt: Button = $options/score
+@onready var score_board: Control = $Score_Board
+
 
 @onready var score_label: Label = $score/scoreCon/scoreLabel
 @onready var selectedscore_label: Label = $score/selectedscoreCon/selectedscoreLabel
@@ -284,7 +286,7 @@ func roll_dice():
 		
 	await get_tree().create_timer(.25).timeout
 	
-	ScoringScript.find_best_outcome(held_dice)
+	ScoringScript.check_bust(held_dice)
 		
 	set_state(player_states.SELECTION)
 
@@ -323,3 +325,9 @@ func remove_score_list(die):
 	print(hovered_score)	
 func update_selectedscore_label(score):
 	selectedscore_label.text = " + Score : " + str(score)
+
+func update_score_board(rules):
+	await score_board.clear()
+	
+	for r in rules:
+		score_board.add_panel(r[0], r[1])

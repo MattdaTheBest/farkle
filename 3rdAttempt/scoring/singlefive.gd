@@ -1,5 +1,6 @@
 extends ScoringRule
 class_name SingleFiveRule
+var name : String = "Single Five"
 
 func evaluate(dice : Array):
 	var dice_entered : Array

@@ -1,5 +1,6 @@
 extends ScoringRule
 class_name ThreeOfAKindRule
+var name : String = "3 of a Kind"
 
 func evaluate(dice : Array):
 	var dice_entered : Array

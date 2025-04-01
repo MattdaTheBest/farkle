@@ -24,55 +24,6 @@ func set_up_rules():
 		ThreeOfAKindRule.new()
 	]
 
-func check_bust(selected_dice : Array):
-	var rule_set : Array = rulesOneDie.duplicate()
-	
-	if selected_dice.size() >= 3:	
-		rule_set += rulesThreeDie.duplicate()
-		
-	var rule_sequences = get_permutations(rule_set)	
-	rule_sequences.shuffle()
-	
-	var scores : Array
-	
-	for rule_sets in rule_sequences:
-		var dice : Array = selected_dice.duplicate()
-		
-		var curr_score = 0
-		for rule in rule_sets:			
-			var result = rule.evaluate(dice)
-			
-			for r in result:
-				curr_score += r.score
-				if r.used_dice != null:
-					for d in r.used_dice:
-						dice.erase(d)
-				
-			if dice.size() == 0:
-				
-				break
-				
-			if curr_score > 0:
-				break
-		
-		scores.append(curr_score)
-		
-	scores.sort()
-	
-	var final = scores[scores.size() - 1]
-	
-	if final == 0 and Player.drawn_dice.size() == selected_dice.size():
-		curr_score = 0
-		curr_mult = 1
-		
-		round_score = 0
-		round_farkles = 1
-		
-		update_round_score(round_score)
-		update_farkles(round_farkles)
-		
-		Player.bust()
-
 func find_best_outcome(selected_dice : Array):
 	var rule_set : Array = rulesOneDie.duplicate()
 	if selected_dice.size() >= 3:	
@@ -87,7 +38,65 @@ func find_best_outcome(selected_dice : Array):
 		var dice : Array = selected_dice.duplicate()
 		
 		var curr_score = 0
-		for rule in rule_sets:			
+		var rule_names : Array
+		for rule in rule_sets:
+			#print(rule.name)
+			
+			var result = rule.evaluate(dice)
+			
+			for r in result:
+				curr_score += r.score
+				if r.used_dice != null:
+					for d in r.used_dice:
+						dice.erase(d)
+			
+				if r.score > 0:
+					rule_names.append([rule.name, r.score])
+				
+			if dice.size() == 0:
+				
+				break
+		
+		scores.append([curr_score, dice.size(), rule_names])
+		
+	scores.sort()
+	
+	var final = scores[scores.size() - 1]
+	#if final[1] != 0:
+		#calculated_score = 0
+		#calculated_mult = 1
+	#else:
+		#calculated_score = final[0]
+		#calculated_mult = 1
+	Player.update_selectedscore_label(final[0])
+	print("Score : ", final[0])
+	print("Rules Used : ", final[2])
+	
+	Player.update_score_board(final[2])
+	
+	if final[0] == 0 and Player.held_dice.size() == selected_dice.size():
+		print("bust")
+	
+	return final[0]
+	
+	#update_calc_s_and_m(calculated_score, calculated_mult)
+
+func check_bust(selected_dice : Array):
+	var rule_set : Array = rulesOneDie.duplicate()
+	if selected_dice.size() >= 3:	
+		rule_set += rulesThreeDie.duplicate()
+		
+	var rule_sequences = get_permutations(rule_set)	
+	rule_sequences.shuffle()
+	
+	var scores : Array
+	
+	for rule_sets in rule_sequences:
+		var dice : Array = selected_dice.duplicate()
+		
+		var curr_score = 0
+		for rule in rule_sets:
+			
 			var result = rule.evaluate(dice)
 			
 			for r in result:
@@ -105,25 +114,11 @@ func find_best_outcome(selected_dice : Array):
 	scores.sort()
 	
 	var final = scores[scores.size() - 1]
-	#if final[1] != 0:
-		#calculated_score = 0
-		#calculated_mult = 1
-	#else:
-		#calculated_score = final[0]
-		#calculated_mult = 1
-	Player.update_selectedscore_label(final[0])
-	print("Score : ", final[0])
-	
-	
+
 	if final[0] == 0 and Player.held_dice.size() == selected_dice.size():
 		print("bust")
 	
 	return final[0]
-	
-	
-	
-	#update_calc_s_and_m(calculated_score, calculated_mult)
-
 
 
 func get_permutations(arr: Array):
