@@ -13,6 +13,9 @@ var overall_score : int = 0
 
 var rulesOneDie : Array
 var rulesThreeDie : Array
+var rulesFourDie : Array
+var rulesFiveDie : Array
+var rulesSixDie : Array
 
 func set_up_rules():
 	rulesOneDie = [
@@ -23,16 +26,48 @@ func set_up_rules():
 	rulesThreeDie = [
 		ThreeOfAKindRule.new()
 	]
+	
+	rulesFourDie = [
+		FourOfAKindRule.new()
+	]
+	
+	rulesFiveDie = [
+		FiveOfAKindRule.new()
+	]
+		
+	rulesSixDie = [
+		SixOfAKindRule.new(),
+		FullHouseRule.new(),
+		StraightRule.new(),
+		ThreePairRule.new()
+	]
 
 func find_best_outcome(selected_dice : Array):
-	var rule_set : Array = rulesOneDie.duplicate()
+	
+	var rule_set : Array
+		
+	if selected_dice.size() >= 6:	
+		rule_set += rulesSixDie.duplicate()
+	if selected_dice.size() >= 5:	
+		rule_set += rulesFiveDie.duplicate()
+	if selected_dice.size() >= 4:	
+		rule_set += rulesFourDie.duplicate()
+	if selected_dice.size() >= 4:	
+		rule_set += rulesFourDie.duplicate()
+	if selected_dice.size() >= 4:	
+		rule_set += rulesFourDie.duplicate()
 	if selected_dice.size() >= 3:	
 		rule_set += rulesThreeDie.duplicate()
+	if selected_dice.size() >= 1:	
+		rule_set += rulesOneDie.duplicate()
+		
+	rule_set = get_types_in_hand(selected_dice,rule_set)
 		
 	var rule_sequences = get_permutations(rule_set)	
 	rule_sequences.shuffle()
-	
+		
 	var scores : Array
+	var rules_sets_checked : int = 0
 	
 	for rule_sets in rule_sequences:
 		var dice : Array = selected_dice.duplicate()
@@ -42,17 +77,24 @@ func find_best_outcome(selected_dice : Array):
 		for rule in rule_sets:
 			#print(rule.name)
 			
+			if dice.size() == 0:
+			
+				break
+			
+			rules_sets_checked += 1
+			
 			var result = rule.evaluate(dice)
 			
 			for r in result:
+				
 				curr_score += r.score
 				if r.used_dice != null:
 					for d in r.used_dice:
 						dice.erase(d)
-			
-				if r.score > 0:
-					rule_names.append([rule.name, r.score])
 				
+				if r.score > 0:
+					rule_names.append([rule.name, r.score, r.used_dice])
+							
 			if dice.size() == 0:
 				
 				break
@@ -60,6 +102,8 @@ func find_best_outcome(selected_dice : Array):
 		scores.append([curr_score, dice.size(), rule_names])
 		
 	scores.sort()
+	
+	print("Calculated Rules : ", rules_sets_checked)
 	
 	var final = scores[scores.size() - 1]
 	#if final[1] != 0:
@@ -81,10 +125,40 @@ func find_best_outcome(selected_dice : Array):
 	
 	#update_calc_s_and_m(calculated_score, calculated_mult)
 
+func get_types_in_hand(hand, rules):
+
+	var rules_used : Array
+
+	for rule in rules:
+
+		var outcome = rule.evaluate(hand)
+		
+		for r in outcome:
+			if r.score > 0:
+				if not rules_used.has(rule):
+					rules_used.append(rule)
+
+	return rules_used
+	
 func check_bust(selected_dice : Array):
-	var rule_set : Array = rulesOneDie.duplicate()
+	var rule_set : Array
+		
+	if selected_dice.size() >= 6:	
+		rule_set += rulesSixDie.duplicate()
+	if selected_dice.size() >= 5:	
+		rule_set += rulesFiveDie.duplicate()
+	if selected_dice.size() >= 4:	
+		rule_set += rulesFourDie.duplicate()
+	if selected_dice.size() >= 4:	
+		rule_set += rulesFourDie.duplicate()
+	if selected_dice.size() >= 4:	
+		rule_set += rulesFourDie.duplicate()
 	if selected_dice.size() >= 3:	
 		rule_set += rulesThreeDie.duplicate()
+	if selected_dice.size() >= 1:	
+		rule_set += rulesOneDie.duplicate()
+		
+	rule_set = get_types_in_hand(selected_dice,rule_set)
 		
 	var rule_sequences = get_permutations(rule_set)	
 	rule_sequences.shuffle()
@@ -120,8 +194,16 @@ func check_bust(selected_dice : Array):
 	
 	return final[0]
 
-
 func get_permutations(arr: Array):
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	var result = []
 
 	if arr.size() <= 1:

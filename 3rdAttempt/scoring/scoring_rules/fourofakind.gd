@@ -1,6 +1,8 @@
 extends ScoringRule
-class_name ThreeOfAKindRule
-var name : String = "3 of a Kind"
+class_name FourOfAKindRule
+var name : String = "4 of a Kind"
+
+var LVL : int = 1
 
 func evaluate(dice : Array):
 	var dice_entered : Array
@@ -23,12 +25,14 @@ func evaluate(dice : Array):
 	
 	for v in counted_values:
 		
-		if counted_values[v] >= 3:
+		if counted_values[v] == 4:
 		
-			if v == 1:
-				score += v * 1000 * (1 + counted_values[v] - 3)
-			else:
-				score += v * 100 * (1 + counted_values[v] - 3)
+			score += 1000
+		
+			#if v == 1:
+				#score += v * 1000 * (1 + counted_values[v] - 3)
+			#else:
+				#score += v * 100 * (1 + counted_values[v] - 3)
 				
 			for d in dice:
 				if d.rolled_value == v:

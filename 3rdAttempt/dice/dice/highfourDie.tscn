@@ -120,7 +120,7 @@ func _process(delta: float) -> void:
 		dice_animations.global_position = dice_animations.position.lerp(Vector2(self.global_position.x + ani_offset,self.global_position.y + ani_offset), default_lerp * delta)
 		unrolled_face_name.global_position = unrolled_face_name.position.lerp(Vector2(self.global_position.x + self.size.x/2 - unrolled_face_name.get_child(0).size.x/2,self.global_position.y - 32), default_lerp * delta)
 	
-	if Player.dragging_dice:
+	if Player.dragging_dice and Player.held_dice.has(self):
 		
 		calculate_drag_positions()
 
@@ -169,6 +169,7 @@ func reset_die():
 	#
 func calculate_drag_positions():
 	var slots = get_parent().get_parent().get_children()
+
 	var closest = get_parent()
 	var index  = get_parent().get_index()
 	for s in slots:

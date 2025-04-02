@@ -2,6 +2,8 @@ extends ScoringRule
 class_name SingleOneRule
 var name : String = "Single One"
 
+var LVL : int = 1
+
 func evaluate(dice : Array):
 	var dice_entered : Array
 	for d in dice:

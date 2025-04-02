@@ -39,9 +39,12 @@ var dragging_dice : bool = false
 @onready var score_butt: Button = $options/score
 @onready var score_board: Control = $Score_Board
 
-
 @onready var score_label: Label = $score/scoreCon/scoreLabel
 @onready var selectedscore_label: Label = $score/selectedscoreCon/selectedscoreLabel
+
+@onready var update_timer: Timer = $update_timer
+var pending_rules = []
+
 
 func _ready() -> void:
 	set_state(player_states.IDLE)
@@ -138,14 +141,11 @@ func draw_dice():
 		
 func draw_dice_at_index(indexs):
 	indexs.sort()
-	print(indexs)
 	
 	while held_dice.size() < hand_size and dice_pouch.size() > 0:
 		var die : Control = dice_pouch.pick_random()
 		dice_pouch.erase(die)
 		
-		print(indexs)
-		print(dice_hand.get_child(indexs[0]))
 		die.reparent(dice_hand.get_child(indexs[0]))
 		
 		die.position = Vector2.ZERO
@@ -327,7 +327,19 @@ func update_selectedscore_label(score):
 	selectedscore_label.text = " + Score : " + str(score)
 
 func update_score_board(rules):
-	await score_board.clear()
+	#await score_board.clear()
 	
-	for r in rules:
-		score_board.add_panel(r[0], r[1])
+	pending_rules = rules
+	update_timer.start(0.3)
+	
+func _on_update_timer_timeout() -> void:
+	print("Update!")
+	var loading_rules : Array
+	for r in pending_rules:
+		loading_rules.append(r[0])
+	
+	for r in pending_rules:
+		score_board.update_board(r[0], r[1], loading_rules, r[2])
+		
+	if pending_rules.size() == 0:
+		score_board.clear()

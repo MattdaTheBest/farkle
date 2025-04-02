@@ -1,41 +1,221 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3hb7d28tn5qo"]
+[gd_scene load_steps=8 format=3 uid="uid://b3hb7d28tn5qo"]
 
 [ext_resource type="Script" path="res://score_board.gd" id="1_n6ox4"]
+[ext_resource type="FontFile" uid="uid://snmklaelrf1e" path="res://fonts/ByteBounce.ttf" id="2_tk6al"]
+[ext_resource type="PackedScene" uid="uid://btjb01mnf2cbw" path="res://score_type_box.tscn" id="3_0hdcf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gcp5s"]
+bg_color = Color(0.117647, 0.117647, 0.117647, 0.568627)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.122252, 0.122252, 0.122252, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nskg0"]
+content_margin_left = 0.0
+bg_color = Color(0.976471, 0.760784, 0.168627, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pctwh"]
+content_margin_left = 0.0
+bg_color = Color(0.917647, 0.309804, 0.211765, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jtfe"]
+content_margin_left = 0.0
+bg_color = Color(0.301961, 0.607843, 0.901961, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+anti_aliasing = false
 
 [node name="Score_Board" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 2
 script = ExtResource("1_n6ox4")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = -12.0
+offset_top = -3.0
+offset_right = 187.0
+offset_bottom = 165.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gcp5s")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 0
-offset_right = 120.0
-offset_bottom = 158.0
+offset_right = 175.0
+offset_bottom = 118.0
+mouse_filter = 2
+theme_override_constants/separation = 4
 
 [node name="Goal" type="PanelContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nskg0")
 
 [node name="GoalLabel" type="Label" parent="VBoxContainer/Goal"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_tk6al")
+theme_override_font_sizes/font_size = 32
 text = "Goal : 600"
 
 [node name="Round_Score" type="PanelContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pctwh")
 
 [node name="RoundScorelLabel" type="Label" parent="VBoxContainer/Round_Score"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_tk6al")
 text = "Round : "
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(50, 0)
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 9
 
-[node name="Hand_Score" type="PanelContainer" parent="VBoxContainer/VBoxContainer"]
+[node name="Control4" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(125, 15)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="HandLabel" type="Label" parent="VBoxContainer/VBoxContainer/Hand_Score"]
+[node name="Hand_Score" type="PanelContainer" parent="VBoxContainer/VBoxContainer2/Control4"]
+custom_minimum_size = Vector2(125, 15)
+layout_mode = 1
+offset_right = 125.0
+offset_bottom = 20.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_2jtfe")
+
+[node name="HandLabel" type="Label" parent="VBoxContainer/VBoxContainer2/Control4/Hand_Score"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_tk6al")
 text = "Hand : "
+
+[node name="onesTOP" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ones" parent="VBoxContainer/VBoxContainer2/onesTOP" instance=ExtResource("3_0hdcf")]
+layout_mode = 2
+
+[node name="fivesTOP" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="fives" parent="VBoxContainer/VBoxContainer2/fivesTOP" instance=ExtResource("3_0hdcf")]
+layout_mode = 2
+
+[node name="3ofakindTOP" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="3ofakind" parent="VBoxContainer/VBoxContainer2/3ofakindTOP" instance=ExtResource("3_0hdcf")]
+layout_mode = 2
+
+[node name="4ofakindTOP" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="4ofakind" parent="VBoxContainer/VBoxContainer2/4ofakindTOP" instance=ExtResource("3_0hdcf")]
+layout_mode = 2
+
+[node name="5ofakindTOP2" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="5ofakind" parent="VBoxContainer/VBoxContainer2/5ofakindTOP2" instance=ExtResource("3_0hdcf")]
+layout_mode = 2
+
+[node name="6ofakindTOP3" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="6ofakind" parent="VBoxContainer/VBoxContainer2/6ofakindTOP3" instance=ExtResource("3_0hdcf")]
+layout_mode = 2
+
+[node name="fullhouse" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="fulhousesd" parent="VBoxContainer/VBoxContainer2/fullhouse" instance=ExtResource("3_0hdcf")]
+layout_mode = 2
+
+[node name="straight" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="strightsd" parent="VBoxContainer/VBoxContainer2/straight" instance=ExtResource("3_0hdcf")]
+layout_mode = 2
+
+[node name="threepair" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="threepairsd" parent="VBoxContainer/VBoxContainer2/threepair" instance=ExtResource("3_0hdcf")]
+layout_mode = 2

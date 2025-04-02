@@ -87,8 +87,6 @@ func animate_idle(die):
 	
 	tween.set_loops()
 	
-
-
 func animate_deselect(objectA):
 	if tween_highlight:
 		tween_highlight.kill()
@@ -242,22 +240,28 @@ func disappear_unrolled_dice(objectA, faces):
 			d.disappear()
 			
 func roll(faces : Array, weights : Array):
-	var total_weight : int = 0
-	for w in weights:
-		total_weight += w
-	
-	var roll = randi_range(1, total_weight)
-	
-	var count : int = 0
-	var index : int = 0
-	for w in weights:
-		count += w
+	var varint = randi_range(0,1)
+	if varint == 1:
+		rolled_value = 1
+	else:
+		rolled_value = 5
 		
-		if roll <= count:
-			rolled_value = faces[index]
-			break
-			
-		index += 1
+	#var total_weight : int = 0
+	#for w in weights:
+		#total_weight += w
+	#
+	#var roll = randi_range(1, total_weight)
+	#
+	#var count : int = 0
+	#var index : int = 0
+	#for w in weights:
+		#count += w
+		#
+		#if roll <= count:
+			#rolled_value = faces[index]
+			#break
+			#
+		#index += 1
 		
 func animate_roll(die_visual, dice, faces):
 		

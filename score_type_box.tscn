@@ -1,39 +1,123 @@
-[gd_scene load_steps=2 format=3 uid="uid://btjb01mnf2cbw"]
+[gd_scene load_steps=6 format=3 uid="uid://btjb01mnf2cbw"]
 
 [ext_resource type="Script" path="res://score_type_box.gd" id="1_vbj1d"]
+[ext_resource type="Script" path="res://scoreboarddiceanimation.gd" id="2_35lsw"]
+[ext_resource type="FontFile" uid="uid://snmklaelrf1e" path="res://fonts/ByteBounce.ttf" id="2_b3lba"]
+[ext_resource type="Texture2D" uid="uid://dvpn7w0da7lb" path="res://3rdAttempt/dice/dice/sprites/die_blank.png" id="2_pamlf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kyef5"]
+content_margin_left = 0.0
+bg_color = Color(0.117647, 0.737255, 0.45098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.180392, 0.133333, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+anti_aliasing = false
 
 [node name="Control" type="Control"]
-custom_minimum_size = Vector2(150, 40)
+visible = false
+top_level = true
+custom_minimum_size = Vector2(110, 10)
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -75.0
-offset_top = -20.0
-offset_right = 75.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 110.0
+offset_bottom = 15.0
+pivot_offset = Vector2(55, 7.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_vbj1d")
 
 [node name="Node2D" type="Node2D" parent="."]
-top_level = true
 
 [node name="score_type_box" type="PanelContainer" parent="Node2D"]
-custom_minimum_size = Vector2(150, 0)
-offset_right = 150.0
-offset_bottom = 40.0
-scale = Vector2(1, 1e-05)
-pivot_offset = Vector2(75, 20)
+custom_minimum_size = Vector2(100, 10)
+offset_right = 110.0
+offset_bottom = 15.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_kyef5")
 
 [node name="Label" type="Label" parent="Node2D/score_type_box"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_b3lba")
+theme_override_font_sizes/font_size = 16
 text = "3 of a Kind : 1500"
-horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Node2D"]
+custom_minimum_size = Vector2(60, 0)
+offset_left = 111.0
+offset_top = -2.0
+offset_right = 179.0
+offset_bottom = 18.0
+pivot_offset = Vector2(30, 10)
+theme_override_constants/separation = -8
+script = ExtResource("2_35lsw")
+
+[node name="Control" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_pamlf")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control2" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control2"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_pamlf")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control3" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control3"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_pamlf")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control4" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control4"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_pamlf")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control5" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control5"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_pamlf")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control6" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control6"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_pamlf")
+region_rect = Rect2(240, 0, 40, 40)
