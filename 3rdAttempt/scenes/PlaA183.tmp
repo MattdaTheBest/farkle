@@ -1,17 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://bj7u8vcs5pvhh"]
+[gd_scene load_steps=14 format=3 uid="uid://bj7u8vcs5pvhh"]
 
 [ext_resource type="Script" path="res://3rdAttempt/player.gd" id="1_mmsx7"]
 [ext_resource type="Shader" path="res://3rdAttempt/scenes/background.gdshader" id="2_hj8m4"]
 [ext_resource type="PackedScene" uid="uid://b3hb7d28tn5qo" path="res://score_board.tscn" id="3_8frt5"]
 [ext_resource type="Theme" uid="uid://dtvwfj125ab5s" path="res://3rdAttempt/dice/dice/sprites/panelTheme.tres" id="4_2rgcs"]
 [ext_resource type="Theme" uid="uid://05cepnl4loe8" path="res://3rdAttempt/dice/dice/sprites/buttonThemes.tres" id="4_6ovsf"]
-[ext_resource type="Theme" uid="uid://dttq57gnogp5k" path="res://3rdAttempt/dice/dice/sprites/buttonGreen.tres" id="5_etkoj"]
 [ext_resource type="Texture2D" uid="uid://pq0pk81spjol" path="res://3rdAttempt/dice/dice/sprites/TESTPANEL.png" id="5_kpwa8"]
 [ext_resource type="Texture2D" uid="uid://d2tq3okkcemnl" path="res://3rdAttempt/dice/dice/sprites/uiComponents.png" id="6_d8aur"]
 [ext_resource type="FontFile" uid="uid://snmklaelrf1e" path="res://fonts/ByteBounce.ttf" id="7_2icwn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bbkav"]
 shader = ExtResource("2_hj8m4")
+shader_parameter/color1 = Color(0.230315, 0.230315, 0.230315, 1)
+shader_parameter/color2 = Color(0.517185, 0.517184, 0.517184, 1)
 shader_parameter/square_size = 250.0
 shader_parameter/speed = -32.0
 shader_parameter/diagonal = true
@@ -38,29 +39,21 @@ texture_margin_right = 6.05731
 texture_margin_bottom = 6.0
 region_rect = Rect2(0, 0, 20, 20)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qghlp"]
-texture = ExtResource("6_d8aur")
-texture_margin_left = 6.0
-texture_margin_top = 6.0
-texture_margin_right = 6.0
-texture_margin_bottom = 8.0
-region_rect = Rect2(81, 1, 14, 15)
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jnxmk"]
 texture = ExtResource("6_d8aur")
 texture_margin_left = 6.0
-texture_margin_top = 6.0
+texture_margin_top = 5.89847
 texture_margin_right = 6.0
-texture_margin_bottom = 9.0
-region_rect = Rect2(1, 0, 14, 16)
+texture_margin_bottom = 8.0
+region_rect = Rect2(1, 1, 14, 15)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bba4x"]
 texture = ExtResource("6_d8aur")
 texture_margin_left = 6.0
 texture_margin_top = 6.0
 texture_margin_right = 6.0
-texture_margin_bottom = 9.0
-region_rect = Rect2(33, 0, 14, 16)
+texture_margin_bottom = 8.0
+region_rect = Rect2(33, 1, 14, 15)
 
 [node name="Player" type="Control"]
 layout_mode = 3
@@ -85,7 +78,6 @@ offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.556863, 0.317647, 1, 0.372549)
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 visible = false
@@ -112,10 +104,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -184.0
-offset_top = 76.0
-offset_right = 184.0
-offset_bottom = 124.0
+offset_left = -154.0
+offset_top = 28.0
+offset_right = 154.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -143,7 +135,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.785398
 pivot_offset = Vector2(4, 4)
-color = Color(0.556863, 0.317647, 1, 0.372549)
+color = Color(0, 0, 0, 0.419608)
 
 [node name="dice_place_holder2" type="Control" parent="dice_hand"]
 z_as_relative = false
@@ -167,7 +159,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.785398
 pivot_offset = Vector2(4, 4)
-color = Color(0.556863, 0.317647, 1, 0.372549)
+color = Color(0, 0, 0, 0.419608)
 
 [node name="dice_place_holder3" type="Control" parent="dice_hand"]
 z_as_relative = false
@@ -191,7 +183,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.785398
 pivot_offset = Vector2(4, 4)
-color = Color(0.556863, 0.317647, 1, 0.372549)
+color = Color(0, 0, 0, 0.419608)
 
 [node name="dice_place_holder4" type="Control" parent="dice_hand"]
 z_as_relative = false
@@ -215,7 +207,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.785398
 pivot_offset = Vector2(4, 4)
-color = Color(0.556863, 0.317647, 1, 0.372549)
+color = Color(0, 0, 0, 0.419608)
 
 [node name="dice_place_holder5" type="Control" parent="dice_hand"]
 z_as_relative = false
@@ -239,7 +231,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.785398
 pivot_offset = Vector2(4, 4)
-color = Color(0.556863, 0.317647, 1, 0.372549)
+color = Color(0, 0, 0, 0.419608)
 
 [node name="dice_place_holder6" type="Control" parent="dice_hand"]
 z_as_relative = false
@@ -263,56 +255,23 @@ grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.785398
 pivot_offset = Vector2(4, 4)
-color = Color(0.556863, 0.317647, 1, 0.372549)
+color = Color(0, 0, 0, 0.419608)
 
 [node name="Score_Board" parent="." instance=ExtResource("3_8frt5")]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 52.0
+offset_left = 5.0
 offset_top = -121.0
-offset_right = 52.0
+offset_right = 5.0
 offset_bottom = -121.0
 grow_vertical = 2
 
 [node name="PanelContainer" parent="Score_Board" index="0"]
 offset_bottom = 205.0
 
-[node name="Control" parent="Score_Board/VBoxContainer/VBoxContainer2/Control2" index="0"]
-offset_left = 28.0
-offset_top = 246.0
-offset_right = 251.0
-offset_bottom = 281.0
-
-[node name="draw" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = 172.5
-offset_right = 50.0
-offset_bottom = 200.5
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(50, 13.5)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="draw" type="Button" parent="draw"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme = ExtResource("4_6ovsf")
-text = "Draw
-"
-
-[node name="score_options" type="HBoxContainer" parent="."]
+[node name="options" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -320,90 +279,61 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -102.0
-offset_top = 172.5
+offset_top = 102.0
 offset_right = 102.0
-offset_bottom = 200.5
+offset_bottom = 191.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(102, 13.5)
+
+[node name="rollanddiscard" type="HBoxContainer" parent="options"]
+visible = false
+layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="score" type="Button" parent="score_options"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-theme = ExtResource("4_6ovsf")
-text = "Score"
-
-[node name="scoreANDpass" type="Button" parent="score_options"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-theme = ExtResource("4_6ovsf")
-text = "Score & Pass"
-
-[node name="rollanddiscard" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -102.0
-offset_top = 172.5
-offset_right = 102.0
-offset_bottom = 200.5
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(102, 13.5)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="discard" type="Button" parent="rollanddiscard"]
+[node name="discard" type="Button" parent="options/rollanddiscard"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme = ExtResource("4_6ovsf")
 text = "Discard
 "
 
-[node name="roll" type="Button" parent="rollanddiscard"]
+[node name="roll" type="Button" parent="options/rollanddiscard"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme = ExtResource("4_6ovsf")
 text = "Roll"
 
-[node name="sorting_options" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -78.0
-offset_top = 143.0
-offset_right = 78.0
-offset_bottom = 171.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(102, 44.5)
-
-[node name="left" type="Button" parent="sorting_options"]
+[node name="score_options" type="HBoxContainer" parent="options"]
+visible = false
 layout_mode = 2
-theme = ExtResource("5_etkoj")
-text = "<"
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="bytype" type="Button" parent="sorting_options"]
-custom_minimum_size = Vector2(65, 0)
+[node name="score" type="Button" parent="options/score_options"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme = ExtResource("5_etkoj")
-text = "By Type"
+theme = ExtResource("4_6ovsf")
+text = "Score"
 
-[node name="byvalue" type="Button" parent="sorting_options"]
-custom_minimum_size = Vector2(65, 0)
+[node name="scoreANDpass" type="Button" parent="options/score_options"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme = ExtResource("5_etkoj")
-text = "By Value"
+theme = ExtResource("4_6ovsf")
+text = "Score & Pass"
+
+[node name="draw" type="HBoxContainer" parent="options"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="draw" type="Button" parent="options/draw"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme = ExtResource("4_6ovsf")
+text = "Draw
+"
 
 [node name="score" type="VBoxContainer" parent="."]
 visible = false
@@ -439,33 +369,34 @@ one_shot = true
 modulate = Color(0.176419, 0.176419, 0.176419, 0.611765)
 z_index = -1
 layout_mode = 0
-offset_left = 9.0
+offset_left = 17.0
 offset_top = -1.0
-offset_right = 271.0
+offset_right = 263.0
 offset_bottom = 664.0
 theme = ExtResource("4_2rgcs")
 theme_override_styles/panel = SubResource("StyleBoxTexture_cxy0g")
 
-[node name="sidepanel" type="PanelContainer" parent="."]
-modulate = Color(1, 1, 1, 0.552941)
+[node name="Panel2" type="Panel" parent="."]
+visible = false
+modulate = Color(0.176419, 0.176419, 0.176419, 0.611765)
 z_index = -1
 layout_mode = 0
-offset_left = 14.0
-offset_top = -43.0
-offset_right = 266.0
-offset_bottom = 688.0
+offset_left = 293.0
+offset_top = 40.0
+offset_right = 823.0
+offset_bottom = 148.0
 theme = ExtResource("4_2rgcs")
-theme_override_styles/panel = SubResource("StyleBoxTexture_qghlp")
+theme_override_styles/panel = SubResource("StyleBoxTexture_cxy0g")
 
 [node name="discard" type="PanelContainer" parent="."]
 z_index = 1
 z_as_relative = false
-custom_minimum_size = Vector2(100, 35)
+custom_minimum_size = Vector2(45, 10)
 layout_mode = 0
-offset_left = 39.0
-offset_top = 437.0
-offset_right = 139.0
-offset_bottom = 472.0
+offset_left = 59.0
+offset_top = 408.0
+offset_right = 141.0
+offset_bottom = 433.0
 pivot_offset = Vector2(28.5, 11.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -486,12 +417,12 @@ vertical_alignment = 1
 [node name="rounds" type="PanelContainer" parent="."]
 z_index = 1
 z_as_relative = false
-custom_minimum_size = Vector2(100, 35)
+custom_minimum_size = Vector2(45, 10)
 layout_mode = 0
-offset_left = 141.0
-offset_top = 437.0
-offset_right = 241.0
-offset_bottom = 472.0
+offset_left = 143.0
+offset_top = 408.0
+offset_right = 225.0
+offset_bottom = 433.0
 pivot_offset = Vector2(28.5, 11.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -516,55 +447,13 @@ offset_left = 389.0
 offset_top = 168.0
 offset_right = 658.0
 offset_bottom = 329.0
-theme = ExtResource("5_etkoj")
-text = "Hello!"
-
-[node name="Button2" type="Button" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 668.0
-offset_top = 170.0
-offset_right = 937.0
-offset_bottom = 331.0
 theme = ExtResource("4_6ovsf")
 
-[node name="BUST" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -60.0
-offset_top = -32.0
-offset_right = 60.0
-offset_bottom = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("4_2rgcs")
-theme_override_styles/panel = SubResource("StyleBoxTexture_jnxmk")
-
-[node name="bustlabel" type="Label" parent="BUST"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
-theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_2icwn")
-theme_override_font_sizes/font_size = 48
-text = "BUST!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[connection signal="pressed" from="draw/draw" to="." method="_on_draw_pressed"]
-[connection signal="pressed" from="score_options/score" to="." method="_on_score_pressed"]
-[connection signal="pressed" from="score_options/scoreANDpass" to="." method="_on_score_pressed"]
-[connection signal="pressed" from="rollanddiscard/discard" to="." method="_on_discard_pressed"]
-[connection signal="pressed" from="rollanddiscard/roll" to="." method="_on_roll_pressed"]
-[connection signal="pressed" from="sorting_options/left" to="." method="_on_left_pressed"]
-[connection signal="toggled" from="sorting_options/left" to="." method="_on_left_toggled"]
-[connection signal="pressed" from="sorting_options/bytype" to="." method="_on_bytype_pressed"]
-[connection signal="pressed" from="sorting_options/byvalue" to="." method="_on_byvalue_pressed"]
+[connection signal="pressed" from="options/rollanddiscard/discard" to="." method="_on_discard_pressed"]
+[connection signal="pressed" from="options/rollanddiscard/roll" to="." method="_on_roll_pressed"]
+[connection signal="pressed" from="options/score_options/score" to="." method="_on_score_pressed"]
+[connection signal="pressed" from="options/score_options/scoreANDpass" to="." method="_on_score_pressed"]
+[connection signal="pressed" from="options/draw/draw" to="." method="_on_draw_pressed"]
 [connection signal="timeout" from="update_timer" to="." method="_on_update_timer_timeout"]
 
 [editable path="Score_Board"]

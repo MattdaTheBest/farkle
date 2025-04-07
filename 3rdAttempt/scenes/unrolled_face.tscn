@@ -1,21 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://cls0wakep4jwl"]
+[gd_scene load_steps=7 format=3 uid="uid://cls0wakep4jwl"]
 
 [ext_resource type="Script" path="res://unrolled_face.gd" id="1_m2n6p"]
 [ext_resource type="Texture2D" uid="uid://dticw7km2ma37" path="res://3rdAttempt/dice/dice/sprites/dice_all_faces.png" id="2_iyqx2"]
-[ext_resource type="FontFile" uid="uid://ckxb0xryleu3y" path="res://fonts/GrapeSoda.ttf" id="3_ph4qt"]
+[ext_resource type="Theme" uid="uid://dtvwfj125ab5s" path="res://3rdAttempt/dice/dice/sprites/panelTheme.tres" id="3_u6ggt"]
+[ext_resource type="Texture2D" uid="uid://d2tq3okkcemnl" path="res://3rdAttempt/dice/dice/sprites/uiComponents.png" id="4_g28lr"]
+[ext_resource type="FontFile" uid="uid://snmklaelrf1e" path="res://fonts/ByteBounce.ttf" id="5_of30i"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y1db4"]
-bg_color = Color(8.90419e-07, 0.291049, 0.352438, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.180392, 0.133333, 0.184314, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-anti_aliasing = false
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qghlp"]
+texture = ExtResource("4_g28lr")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(81, 0, 14, 16)
 
 [node name="unrolled_face" type="Control" groups=["unrolled_face"]]
 custom_minimum_size = Vector2(86, 32)
@@ -38,18 +35,20 @@ region_rect = Rect2(0, 0, 40, 40)
 z_index = -1
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 0
-offset_left = 16.0
+offset_left = 17.0
 offset_top = 5.0
-offset_right = 86.0
-offset_bottom = 29.0
+offset_right = 91.0
+offset_bottom = 30.0
 scale = Vector2(1e-05, 1)
-theme_override_styles/panel = SubResource("StyleBoxFlat_y1db4")
+theme = ExtResource("3_u6ggt")
+theme_override_styles/panel = SubResource("StyleBoxTexture_qghlp")
 
 [node name="Label" type="Label" parent="PanelContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
 theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
-theme_override_fonts/font = ExtResource("3_ph4qt")
+theme_override_fonts/font = ExtResource("5_of30i")
 theme_override_font_sizes/font_size = 16
 text = "   16.67% "
 horizontal_alignment = 1

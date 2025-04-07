@@ -1,6 +1,8 @@
 extends Control
 class_name DiceBaseScript
 
+var defualt_size : Vector2 = Vector2(1.5,1.5)
+
 var full_weight : int 
 
 var rolled_value : int = 0
@@ -25,6 +27,35 @@ var appearing : bool = false
 var roll_tween : Tween
 var rolling : bool = false
 
+var scoring_animation_playing : bool = false
+
+var dice_visual : AnimatedSprite2D
+var dice_shadow : Sprite2D
+
+var idle_tween : Tween
+
+func set_visual(visual, shadow):
+	dice_visual = visual
+	dice_shadow = shadow
+
+func score(rule, score, mult):
+	print("Do Items and What Not Things in between here")
+	
+	await animate_score()
+	
+	#await get_tree().create_timer(1).timeout
+	
+	score += rolled_value
+	
+	mult += 0
+	
+	Player.score_board.scoring_updates(rule, score, mult)
+	
+	scoring_animation_playing = false
+	
+	#await get_tree().create_timer(5).timeout
+	
+	return [score, mult]
 
 func animate_popIN():
 	pass
@@ -36,6 +67,7 @@ func animate_dice():
 	pass
 
 func animate_select(objectA):
+	
 	if tween_highlight:
 		tween_highlight.kill()
 	
@@ -45,8 +77,9 @@ func animate_select(objectA):
 	tween_select = create_tween()
 
 	tween_select.parallel().tween_property(objectA.material, "shader_parameter/clr:a", 1, .25).set_trans(Tween.TRANS_BACK)
-	tween_select.parallel().tween_property(objectA, "scale", Vector2(1.45,1.45), .25).set_trans(Tween.TRANS_CIRC)
-	tween_select.parallel().tween_property(objectA, "scale", Vector2(1.25,1.25), .25).set_trans(Tween.TRANS_BACK).set_delay(.25)
+	tween_select.parallel().tween_property(objectA, "scale", Vector2(2,2), .25).set_trans(Tween.TRANS_CIRC)
+	tween_select.parallel().tween_property(objectA, "offset:y", 0, .25).set_trans(Tween.TRANS_BACK)
+	tween_select.parallel().tween_property(objectA, "scale", Vector2(1.75,1.75), .25).set_trans(Tween.TRANS_BACK).set_delay(.25)
 	tween_select.parallel().tween_property(objectA, "rotation_degrees", 0, .25).set_trans(Tween.TRANS_BACK).set_delay(.25)
 	
 	await tween_select
@@ -69,25 +102,39 @@ func animate_select(objectA):
 	#
 	#curr_state = states.IDLE
 
-func animate_idle(die):
+func animate_idle():
 	
 	await get_tree().create_timer(randf_range(0,1)).timeout
 	
-	var tween = create_tween()
+	idle_tween = create_tween()
 	
-	tween.tween_interval(randf_range(0,1))
+	idle_tween.set_parallel().tween_property(dice_visual, "offset:y", -4, 1.5).set_ease(Tween.EASE_IN)
 	
-	tween.tween_property(die, "rotation_degrees", -4, 3).set_ease(Tween.EASE_IN)
+	idle_tween.set_parallel().tween_property(dice_visual, "offset:y", 0, 1.5).set_ease(Tween.EASE_IN).set_delay(1.5)
 	
-	tween.tween_interval(randf_range(0,1))
+	#idle_tween.tween_interval(randf_range(0,1))
+	#
+	#idle_tween.tween_property(dice_visual, "rotation_degrees", -4, 1.5).set_ease(Tween.EASE_IN)
+	#
+	#idle_tween.set_parallel().tween_property(dice_visual, "offset:y", -4, 1.5).set_ease(Tween.EASE_IN)
+	#idle_tween.set_parallel().tween_property(dice_shadow, "scale", Vector2(.75,.75), 1.5).set_ease(Tween.EASE_IN)
+	#
+	#idle_tween.tween_interval(randf_range(0,1))
+	#
+	#idle_tween.tween_property(dice_visual, "rotation_degrees", 0, 1.5).set_ease(Tween.EASE_IN)
+	#
+	#idle_tween.tween_property(dice_visual, "rotation_degrees", 4, 1.5).set_ease(Tween.EASE_IN)
+	#
+	#idle_tween.set_parallel().tween_property(dice_visual, "offset:y", 0, 1.5).set_ease(Tween.EASE_IN)
+	#idle_tween.set_parallel().tween_property(dice_shadow, "scale", Vector2(1,1), 1.5).set_ease(Tween.EASE_IN)
 	
-	tween.tween_property(die, "rotation_degrees", 0, 3).set_ease(Tween.EASE_IN)
-	
-	tween.tween_property(die, "rotation_degrees", 4, 3).set_ease(Tween.EASE_IN)
-	
-	tween.set_loops()
+	idle_tween.set_loops()
 	
 func animate_deselect(objectA):
+	
+	if idle_tween:
+		idle_tween.pause()
+	
 	if tween_highlight:
 		tween_highlight.kill()
 	
@@ -97,14 +144,21 @@ func animate_deselect(objectA):
 	tween_select = create_tween()
 	
 	tween_select.parallel().tween_property(objectA.material, "shader_parameter/clr:a", 0, .25).set_trans(Tween.TRANS_BACK)
-	tween_select.parallel().tween_property(objectA, "scale", Vector2(1.45,1.45), .25).set_trans(Tween.TRANS_CIRC)
-	tween_select.parallel().tween_property(objectA, "scale", Vector2(1.25,1.25), .25).set_trans(Tween.TRANS_BACK).set_delay(.25)
+	tween_select.parallel().tween_property(objectA, "scale", Vector2(2,2), .25).set_trans(Tween.TRANS_CIRC)
+	tween_select.parallel().tween_property(objectA, "scale", Vector2(1.5,1.5), .25).set_trans(Tween.TRANS_BACK).set_delay(.25)
 	
-	await tween_select
+	await tween_select.finished
+	
+	if idle_tween:
+		idle_tween.play()
 	
 	curr_state = states.IDLE	
 
 func animate_highlight(objectA, objectB):
+	
+	if idle_tween:
+		idle_tween.pause()
+	
 	if tween_highlight:
 		tween_highlight.kill()
 	if tween_select:
@@ -112,15 +166,24 @@ func animate_highlight(objectA, objectB):
 		
 	tween_highlight = create_tween()
 	
-	tween_highlight.parallel().tween_property(objectA, "scale", Vector2(1.25,1.25), .35).set_trans(Tween.TRANS_BACK)
+	tween_highlight.parallel().tween_property(objectA, "scale", Vector2(1.75,1.75), .35).set_trans(Tween.TRANS_BACK)
 	#tween_highlight.parallel().tween_property(objectA, "rotation_degrees", randf_range(-12,12), .25).set_trans(Tween.TRANS_BACK)
 	
-	await tween_highlight
+	await tween_highlight.finished
+	
+	if idle_tween:
+		idle_tween.play()
 	
 	curr_state = states.HOVERED
 	
 func animate_unhighlight(objectA, objectB):
+	
+	
+	
 	if not selected:
+		if idle_tween:
+			idle_tween.pause()
+		
 		if tween_highlight:
 			tween_highlight.kill()
 		if tween_select:
@@ -129,10 +192,13 @@ func animate_unhighlight(objectA, objectB):
 		tween_highlight = create_tween()
 		
 		tween_highlight.tween_property(objectA.material, "shader_parameter/clr:a", 0, .35).set_trans(Tween.TRANS_BACK)
-		tween_highlight.parallel().tween_property(objectA, "scale", Vector2(1,1), .35).set_trans(Tween.TRANS_BACK)
+		tween_highlight.parallel().tween_property(objectA, "scale", Vector2(1.5,1.5), .35).set_trans(Tween.TRANS_BACK)
 		#tween_highlight.parallel().tween_property(objectA, "rotation_degrees", 0, .25).set_trans(Tween.TRANS_BACK).set_delay(.25)
 		
-		await tween_highlight
+		await tween_highlight.finished
+		
+		if idle_tween:
+			idle_tween.play()
 		
 		curr_state = states.IDLE
 
@@ -240,30 +306,60 @@ func disappear_unrolled_dice(objectA, faces):
 			d.disappear()
 			
 func roll(faces : Array, weights : Array):
-	var varint = randi_range(0,1)
-	if varint == 1:
-		rolled_value = 1
-	else:
-		rolled_value = 5
+	#var varint = randi_range(0,1)
+	#if varint == 1:
+		#rolled_value = 1
+	#else:
+		#rolled_value = 5
 		
-	#var total_weight : int = 0
-	#for w in weights:
-		#total_weight += w
+	var total_weight : int = 0
+	for w in weights:
+		total_weight += w
+	
+	var roll = randi_range(1, total_weight)
+	
+	var count : int = 0
+	var index : int = 0
+	for w in weights:
+		count += w
+		
+		if roll <= count:
+			rolled_value = faces[index]
+			break
+			
+		index += 1
+
+func animate_score():
+	
+	scoring_animation_playing = true
+	
+	var tween = create_tween()
+
+	tween.tween_property(dice_visual, "position:y", dice_visual.position.y - 30, .25).set_trans(Tween.TRANS_BACK)
+	
+	tween.tween_property(dice_visual, "rotation_degrees", -20 , .25).set_trans(Tween.TRANS_BACK)
+	
+	tween.tween_property(dice_visual, "rotation_degrees", 20 , .4).set_trans(Tween.TRANS_BACK)
+	
+	tween.tween_property(dice_visual, "rotation_degrees", 0 , .25).set_trans(Tween.TRANS_BACK)
+	
+	await tween.finished
+	
+	return true
+	
+	#tween.tween_property(die_visual, "scale", Vector2(1.5,1.5) , .25).set_trans(Tween.TRANS_CIRC).set_delay(0.1)
 	#
-	#var roll = randi_range(1, total_weight)
+	#tween.tween_property(die_visual, "scale", Vector2(0,0) , .15).set_trans(Tween.TRANS_CIRC).set_delay(0.1)
+	
+	#tween.tween_property(die_visual, "scale", Vector2(2,2), .35)
 	#
-	#var count : int = 0
-	#var index : int = 0
-	#for w in weights:
-		#count += w
-		#
-		#if roll <= count:
-			#rolled_value = faces[index]
-			#break
-			#
-		#index += 1
+	#tween.tween_property(die_visual, "scale", Vector2(0,0), .35)
+	
+	pass
 		
 func animate_roll(die_visual, dice, faces):
+	if idle_tween:	
+		idle_tween.pause()
 		
 	rolling = true
 
@@ -275,9 +371,9 @@ func animate_roll(die_visual, dice, faces):
 	
 	roll_tween.parallel().tween_property(die_visual, "scale", Vector2(0,0), .35).set_trans(Tween.TRANS_BACK)
 	
-	roll_tween.parallel().tween_property(die_visual, "scale", Vector2(1.5,1.5), .55).set_trans(Tween.TRANS_CUBIC).set_delay(.5)
+	roll_tween.parallel().tween_property(die_visual, "scale", Vector2(2.1,2.1), .55).set_trans(Tween.TRANS_CUBIC).set_delay(.5)
 	
-	roll_tween.parallel().tween_property(die_visual, "scale", Vector2(1,1), .5).set_trans(Tween.TRANS_BACK).set_delay(1)
+	roll_tween.parallel().tween_property(die_visual, "scale", Vector2(1.5,1.5), .5).set_trans(Tween.TRANS_BACK).set_delay(1)
 
 	await get_tree().create_timer(.35).timeout
 
@@ -288,6 +384,9 @@ func animate_roll(die_visual, dice, faces):
 	print(rolled_value + 1)
 	
 	await roll_tween.finished
+	
+	if idle_tween:	
+		idle_tween.play()
 	
 	die_visual.rotation_degrees = 0
 	
@@ -332,3 +431,4 @@ func wobble(die_visual):
 	var tween = create_tween()
 	
 	tween.tween_property(die_visual, "rotation_degrees", randi_range(-8,8), .5).set_trans(Tween.TRANS_CIRC)
+	tween.tween_property(die_visual, "rotation_degrees", 0, .5).set_trans(Tween.TRANS_CIRC)

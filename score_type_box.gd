@@ -7,13 +7,28 @@ extends Control
 var score_type
 var displayed_score = 0
 
+
+#func _ready() -> void:
+	#
+		#var tween = create_tween()
+		#
+		#tween.tween_property(score_type_box, "rotation_degrees",2,1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		#
+		#tween.tween_property(score_type_box, "rotation_degrees", 0,1).set_ease(Tween.EASE_IN)
+		#
+		#tween.tween_property(score_type_box, "rotation_degrees", -2,1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		#
+		#tween.tween_property(score_type_box, "rotation_degrees", 0,1).set_ease(Tween.EASE_IN)
+		#
+		#tween.set_loops()
+
 func _process(delta: float) -> void:
 	pass
 	
-	self.global_position = self.global_position.lerp(get_parent().global_position, 4 * delta)
+	self.global_position = self.global_position.lerp(get_parent().global_position + Vector2( - size.x/2 + 55, + 32), 4 * delta)
 	
-	#score_type_box.global_position = score_type_box.global_position.lerp(self.global_position, 4 * delta)
-	#h_box_container.global_position	= h_box_container.global_position.lerp(self.global_position - Vector2( - (size.x), 2), 4 * delta)
+	score_type_box.global_position = score_type_box.global_position.lerp(self.global_position, 4 * delta)
+	h_box_container.global_position	= h_box_container.global_position.lerp(self.global_position - Vector2( - (size.x), 2), 4 * delta)
 
 func set_score(type, score, dice_in_use, spawn):
 	
@@ -40,8 +55,17 @@ func set_score(type, score, dice_in_use, spawn):
 		displayed_score = score
 		var tween = create_tween()
 		
-		tween.tween_property(score_type_box, "scale", Vector2(1.05,1),.35).set_trans(Tween.TRANS_BACK)
-		tween.tween_property(score_type_box, "scale", Vector2(1,1),.35).set_trans(Tween.TRANS_BACK)
+		tween.set_parallel().tween_property(score_type_box, "scale", Vector2(1.2,1.2),.35).set_trans(Tween.TRANS_BACK)
+		#tween.set_parallel().tween_property(score_type_box, "rotation_degrees",3,.35).set_trans(Tween.TRANS_BACK)
+		
+		#tween.set_parallel().tween_property(score_type_box, "rotation_degrees", -3,.35).set_trans(Tween.TRANS_BACK).set_delay(.35)
+		tween.set_parallel().tween_property(score_type_box, "scale", Vector2(1,1),.35).set_trans(Tween.TRANS_BACK).set_delay(.35)
+		
+		#tween.set_parallel().tween_property(score_type_box, "rotation_degrees", 0,.15).set_trans(Tween.TRANS_BACK).set_delay(.8)
+		#tween.set_loops()
+		
+	else:
+		displayed_score = score
 	
 	#print("DICE USED : ", in_use)
 	appear(in_use, spawn)
@@ -64,7 +88,8 @@ func appear(sprites, spawn):
 
 		tween = create_tween()
 		
-		tween.parallel().tween_property(score_type_box, "scale", Vector2(1,1), .35).set_trans(Tween.TRANS_BACK)
+		tween.tween_property(score_type_box, "scale", Vector2(1.2,1.2), .35).set_trans(Tween.TRANS_BACK)
+		tween.tween_property(score_type_box, "scale", Vector2(1,1), .35).set_trans(Tween.TRANS_BACK)
 	
 	for s in sprites:
 		var tween2

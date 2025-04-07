@@ -1,0 +1,78 @@
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://dtvwfj125ab5s"]
+
+[ext_resource type="Texture2D" uid="uid://pq0pk81spjol" path="res://3rdAttempt/dice/dice/sprites/TESTPANEL.png" id="1_ddwlr"]
+[ext_resource type="Texture2D" uid="uid://d2tq3okkcemnl" path="res://3rdAttempt/dice/dice/sprites/uiComponents.png" id="2_p1s17"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqm27"]
+texture = ExtResource("1_ddwlr")
+texture_margin_left = 14.0
+texture_margin_top = 14.0
+texture_margin_right = 14.0
+texture_margin_bottom = 14.0
+region_rect = Rect2(0, 0, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_73k05"]
+texture = ExtResource("2_p1s17")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(17, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bba4x"]
+texture = ExtResource("2_p1s17")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(33, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_80lvl"]
+texture = ExtResource("2_p1s17")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(97, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gdckw"]
+texture = ExtResource("2_p1s17")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(49, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qghlp"]
+texture = ExtResource("2_p1s17")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(81, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jnxmk"]
+texture = ExtResource("2_p1s17")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(1, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b7pbv"]
+texture = ExtResource("2_p1s17")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(65, 0, 14, 16)
+
+[resource]
+Panel/styles/panel = SubResource("StyleBoxTexture_xqm27")
+PanelContainer/styles/Blue = SubResource("StyleBoxTexture_73k05")
+PanelContainer/styles/Green = SubResource("StyleBoxTexture_bba4x")
+PanelContainer/styles/Grey = SubResource("StyleBoxTexture_80lvl")
+PanelContainer/styles/Orange = SubResource("StyleBoxTexture_gdckw")
+PanelContainer/styles/Purple = SubResource("StyleBoxTexture_qghlp")
+PanelContainer/styles/Red = SubResource("StyleBoxTexture_jnxmk")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_b7pbv")

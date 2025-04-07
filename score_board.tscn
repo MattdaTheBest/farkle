@@ -1,8 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3hb7d28tn5qo"]
+[gd_scene load_steps=16 format=3 uid="uid://b3hb7d28tn5qo"]
 
 [ext_resource type="Script" path="res://score_board.gd" id="1_n6ox4"]
 [ext_resource type="FontFile" uid="uid://snmklaelrf1e" path="res://fonts/ByteBounce.ttf" id="2_tk6al"]
 [ext_resource type="PackedScene" uid="uid://btjb01mnf2cbw" path="res://score_type_box.tscn" id="3_0hdcf"]
+[ext_resource type="Script" path="res://score_type_box.gd" id="3_2cuyu"]
+[ext_resource type="PackedScene" uid="uid://51wq83vv7if0" path="res://score_type_box_rework.tscn" id="3_cnqwd"]
+[ext_resource type="Script" path="res://scoreboarddiceanimation.gd" id="4_5tdbq"]
+[ext_resource type="Texture2D" uid="uid://d2tq3okkcemnl" path="res://3rdAttempt/dice/dice/sprites/uiComponents.png" id="4_f8p7t"]
+[ext_resource type="Texture2D" uid="uid://dvpn7w0da7lb" path="res://3rdAttempt/dice/dice/sprites/die_blank.png" id="5_fo7oe"]
+[ext_resource type="Theme" uid="uid://dtvwfj125ab5s" path="res://3rdAttempt/dice/dice/sprites/panelTheme.tres" id="8_8o4vw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gcp5s"]
 bg_color = Color(0.117647, 0.117647, 0.117647, 0.568627)
@@ -17,41 +23,35 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nskg0"]
-content_margin_left = 0.0
-bg_color = Color(0.976471, 0.760784, 0.168627, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.180392, 0.133333, 0.184314, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-expand_margin_left = 8.0
-expand_margin_right = 8.0
-anti_aliasing = false
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_80lvl"]
+texture = ExtResource("4_f8p7t")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(97, 0, 14, 16)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pctwh"]
-content_margin_left = 0.0
-bg_color = Color(0.917647, 0.309804, 0.211765, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.180392, 0.133333, 0.184314, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-expand_margin_left = 8.0
-expand_margin_right = 8.0
-anti_aliasing = false
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qfxrk"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jtfe"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_icxqk"]
+texture = ExtResource("4_f8p7t")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(49, 1, 14, 15)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gdckw"]
+texture = ExtResource("4_f8p7t")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(49, 0, 14, 16)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7wns8"]
 content_margin_left = 0.0
-bg_color = Color(0.301961, 0.607843, 0.901961, 1)
+bg_color = Color(0.682353, 0.137255, 0.203922, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -72,12 +72,22 @@ mouse_filter = 2
 script = ExtResource("1_n6ox4")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -12.0
 offset_top = -3.0
 offset_right = 187.0
 offset_bottom = 165.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gcp5s")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = -29.0
+offset_top = -5.0
+offset_right = 205.0
+offset_bottom = 232.0
+theme = ExtResource("8_8o4vw")
+theme_override_styles/panel = SubResource("StyleBoxTexture_80lvl")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(150, 0)
@@ -88,10 +98,13 @@ mouse_filter = 2
 theme_override_constants/separation = 4
 
 [node name="Goal" type="PanelContainer" parent="VBoxContainer"]
+visible = false
+material = SubResource("ShaderMaterial_qfxrk")
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_nskg0")
+theme = ExtResource("8_8o4vw")
+theme_override_styles/panel = SubResource("StyleBoxTexture_icxqk")
 
 [node name="GoalLabel" type="Label" parent="VBoxContainer/Goal"]
 layout_mode = 2
@@ -100,14 +113,32 @@ theme_override_fonts/font = ExtResource("2_tk6al")
 theme_override_font_sizes/font_size = 32
 text = "Goal : 600"
 
+[node name="score" type="PanelContainer" parent="VBoxContainer"]
+visible = false
+material = SubResource("ShaderMaterial_qfxrk")
+custom_minimum_size = Vector2(175, 0)
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("8_8o4vw")
+theme_override_styles/panel = SubResource("StyleBoxTexture_icxqk")
+
+[node name="scoreLabel" type="Label" parent="VBoxContainer/score"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_tk6al")
+theme_override_font_sizes/font_size = 32
+text = "Score : 600"
+
 [node name="Round_Score" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_pctwh")
+theme = ExtResource("8_8o4vw")
+theme_override_styles/panel = SubResource("StyleBoxTexture_gdckw")
 
 [node name="RoundScorelLabel" type="Label" parent="VBoxContainer/Round_Score"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
 theme_override_fonts/font = ExtResource("2_tk6al")
 text = "Round : "
 
@@ -116,28 +147,130 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
-theme_override_constants/separation = 9
+theme_override_constants/separation = 31
 
-[node name="Control4" type="Control" parent="VBoxContainer/VBoxContainer2"]
-custom_minimum_size = Vector2(125, 15)
+[node name="Control2" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+
+[node name="Control" parent="VBoxContainer/VBoxContainer2/Control2" instance=ExtResource("3_cnqwd")]
+layout_mode = 2
+offset_left = -23.0
+offset_top = 44.0
+offset_right = 200.0
+offset_bottom = 79.0
+header_mode = true
+
+[node name="unuseddice" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Hand_Score" type="PanelContainer" parent="VBoxContainer/VBoxContainer2/Control4"]
-custom_minimum_size = Vector2(125, 15)
-layout_mode = 1
-offset_right = 125.0
-offset_bottom = 20.0
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/unuseddice" instance=ExtResource("3_cnqwd")]
+visible = false
+unused_mode = true
+
+[node name="unuseddiceasd" type="Control" parent="VBoxContainer/VBoxContainer2/unuseddice"]
+visible = false
+top_level = true
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+anchors_preset = 0
+offset_right = 110.0
+offset_bottom = 15.0
+pivot_offset = Vector2(55, 7.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_2jtfe")
+script = ExtResource("3_2cuyu")
 
-[node name="HandLabel" type="Label" parent="VBoxContainer/VBoxContainer2/Control4/Hand_Score"]
+[node name="Node2D" type="Node2D" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd"]
+
+[node name="score_type_box" type="PanelContainer" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D"]
+custom_minimum_size = Vector2(100, 10)
+offset_right = 110.0
+offset_bottom = 15.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_7wns8")
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/score_type_box"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
 theme_override_fonts/font = ExtResource("2_tk6al")
-text = "Hand : "
+theme_override_font_sizes/font_size = 16
+text = "3 of a Kind : 1500"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D"]
+custom_minimum_size = Vector2(60, 0)
+offset_left = 111.0
+offset_top = -2.0
+offset_right = 179.0
+offset_bottom = 18.0
+pivot_offset = Vector2(30, 10)
+theme_override_constants/separation = -8
+script = ExtResource("4_5tdbq")
+
+[node name="Control" type="Control" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer/Control"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("5_fo7oe")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control2" type="Control" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer/Control2"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("5_fo7oe")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control3" type="Control" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer/Control3"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("5_fo7oe")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control4" type="Control" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer/Control4"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("5_fo7oe")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control5" type="Control" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer/Control5"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("5_fo7oe")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control6" type="Control" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/VBoxContainer2/unuseddice/unuseddiceasd/Node2D/HBoxContainer/Control6"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("5_fo7oe")
+region_rect = Rect2(240, 0, 40, 40)
 
 [node name="onesTOP" type="Control" parent="VBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(110, 10)
@@ -145,7 +278,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/onesTOP" instance=ExtResource("3_cnqwd")]
+visible = false
+layout_mode = 2
+
 [node name="ones" parent="VBoxContainer/VBoxContainer2/onesTOP" instance=ExtResource("3_0hdcf")]
+visible = false
 layout_mode = 2
 
 [node name="fivesTOP" type="Control" parent="VBoxContainer/VBoxContainer2"]
@@ -154,7 +292,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/fivesTOP" instance=ExtResource("3_cnqwd")]
+visible = false
+
 [node name="fives" parent="VBoxContainer/VBoxContainer2/fivesTOP" instance=ExtResource("3_0hdcf")]
+visible = false
 layout_mode = 2
 
 [node name="3ofakindTOP" type="Control" parent="VBoxContainer/VBoxContainer2"]
@@ -163,7 +305,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/3ofakindTOP" instance=ExtResource("3_cnqwd")]
+visible = false
+
 [node name="3ofakind" parent="VBoxContainer/VBoxContainer2/3ofakindTOP" instance=ExtResource("3_0hdcf")]
+visible = false
 layout_mode = 2
 
 [node name="4ofakindTOP" type="Control" parent="VBoxContainer/VBoxContainer2"]
@@ -172,7 +318,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/4ofakindTOP" instance=ExtResource("3_cnqwd")]
+visible = false
+
 [node name="4ofakind" parent="VBoxContainer/VBoxContainer2/4ofakindTOP" instance=ExtResource("3_0hdcf")]
+visible = false
 layout_mode = 2
 
 [node name="5ofakindTOP2" type="Control" parent="VBoxContainer/VBoxContainer2"]
@@ -181,7 +331,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/5ofakindTOP2" instance=ExtResource("3_cnqwd")]
+visible = false
+
 [node name="5ofakind" parent="VBoxContainer/VBoxContainer2/5ofakindTOP2" instance=ExtResource("3_0hdcf")]
+visible = false
 layout_mode = 2
 
 [node name="6ofakindTOP3" type="Control" parent="VBoxContainer/VBoxContainer2"]
@@ -190,7 +344,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/6ofakindTOP3" instance=ExtResource("3_cnqwd")]
+visible = false
+
 [node name="6ofakind" parent="VBoxContainer/VBoxContainer2/6ofakindTOP3" instance=ExtResource("3_0hdcf")]
+visible = false
 layout_mode = 2
 
 [node name="fullhouse" type="Control" parent="VBoxContainer/VBoxContainer2"]
@@ -199,7 +357,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/fullhouse" instance=ExtResource("3_cnqwd")]
+visible = false
+
 [node name="fulhousesd" parent="VBoxContainer/VBoxContainer2/fullhouse" instance=ExtResource("3_0hdcf")]
+visible = false
 layout_mode = 2
 
 [node name="straight" type="Control" parent="VBoxContainer/VBoxContainer2"]
@@ -208,7 +370,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/straight" instance=ExtResource("3_cnqwd")]
+visible = false
+
 [node name="strightsd" parent="VBoxContainer/VBoxContainer2/straight" instance=ExtResource("3_0hdcf")]
+visible = false
 layout_mode = 2
 
 [node name="threepair" type="Control" parent="VBoxContainer/VBoxContainer2"]
@@ -217,5 +383,22 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/threepair" instance=ExtResource("3_cnqwd")]
+visible = false
+
 [node name="threepairsd" parent="VBoxContainer/VBoxContainer2/threepair" instance=ExtResource("3_0hdcf")]
+visible = false
+layout_mode = 2
+
+[node name="2triples" type="Control" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(110, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="scorebox_v2" parent="VBoxContainer/VBoxContainer2/2triples" instance=ExtResource("3_cnqwd")]
+visible = false
+
+[node name="2triplessd" parent="VBoxContainer/VBoxContainer2/2triples" instance=ExtResource("3_0hdcf")]
+visible = false
 layout_mode = 2

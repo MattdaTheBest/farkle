@@ -4,6 +4,9 @@ var name : String = "3 of a Kind"
 
 var LVL : int = 1
 
+var base_score : int = 30 
+var base_mult : int = 2
+
 func evaluate(dice : Array):
 	var dice_entered : Array
 	for d in dice:
@@ -27,13 +30,15 @@ func evaluate(dice : Array):
 		
 		if counted_values[v] == 3:
 		
-			score += 500
+			score = base_score * base_mult
 				
 			for d in dice:
 				if d.rolled_value == v:
 					used_dice.append(d)
 	
 	return [{
-		"score" : score,
-		"used_dice" : used_dice
+		"score": score,
+		"base_score": base_score,
+		"base_mult": base_mult,
+		"used_dice": used_dice
 	}]

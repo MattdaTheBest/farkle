@@ -1,0 +1,404 @@
+[gd_scene load_steps=16 format=3 uid="uid://51wq83vv7if0"]
+
+[ext_resource type="Script" path="res://score_type_box_header.gd" id="1_utmib"]
+[ext_resource type="FontFile" uid="uid://snmklaelrf1e" path="res://fonts/ByteBounce.ttf" id="2_o42i2"]
+[ext_resource type="Script" path="res://scoreboarddiceanimation.gd" id="3_e2q4m"]
+[ext_resource type="Texture2D" uid="uid://dvpn7w0da7lb" path="res://3rdAttempt/dice/dice/sprites/die_blank.png" id="4_3tyux"]
+[ext_resource type="Theme" uid="uid://dtvwfj125ab5s" path="res://3rdAttempt/dice/dice/sprites/panelTheme.tres" id="4_pt0h5"]
+[ext_resource type="Texture2D" uid="uid://bcjux10ny1ldf" path="res://3rdAttempt/dice/dice/sprites/x.png" id="5_2khie"]
+[ext_resource type="Texture2D" uid="uid://d2tq3okkcemnl" path="res://3rdAttempt/dice/dice/sprites/uiComponents.png" id="7_7a01i"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jnxmk"]
+texture = ExtResource("7_7a01i")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(1, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gdckw"]
+texture = ExtResource("7_7a01i")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(49, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bba4x"]
+texture = ExtResource("7_7a01i")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(33, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_73k05"]
+texture = ExtResource("7_7a01i")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(17, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_80lvl"]
+texture = ExtResource("7_7a01i")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(97, 0, 14, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uetl7"]
+texture = ExtResource("7_7a01i")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(33, 1, 14, 15)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f8qyp"]
+texture = ExtResource("7_7a01i")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(17, 1, 14, 15)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iic11"]
+texture = ExtResource("7_7a01i")
+texture_margin_left = 6.0
+texture_margin_top = 5.89847
+texture_margin_right = 6.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(1, 1, 14, 15)
+
+[node name="scorebox_v2" type="Control"]
+top_level = true
+custom_minimum_size = Vector2(223, 35)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -111.5
+offset_right = 111.5
+offset_bottom = 29.0
+pivot_offset = Vector2(111.5, 14.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_utmib")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(111.5, 0)
+
+[node name="X" type="Sprite2D" parent="Node2D"]
+z_index = 2
+z_as_relative = false
+position = Vector2(41, 0)
+texture = ExtResource("5_2khie")
+
+[node name="ifUnused" type="PanelContainer" parent="Node2D"]
+visible = false
+z_index = 2
+z_as_relative = false
+custom_minimum_size = Vector2(79, 0)
+offset_left = -107.0
+offset_top = -12.0
+offset_right = 106.0
+offset_bottom = 11.0
+pivot_offset = Vector2(106.5, 11.5)
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = ExtResource("4_pt0h5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_jnxmk")
+
+[node name="unusedLabel" type="Label" parent="Node2D/ifUnused"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_o42i2")
+theme_override_font_sizes/font_size = 16
+text = "Type"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="scored_value" type="PanelContainer" parent="Node2D"]
+z_index = 2
+z_as_relative = false
+custom_minimum_size = Vector2(79, 0)
+offset_left = -25.0
+offset_top = -12.0
+offset_right = 106.0
+offset_bottom = 11.0
+scale = Vector2(1e-05, 1)
+pivot_offset = Vector2(65.5, 11.5)
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = ExtResource("4_pt0h5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_gdckw")
+
+[node name="scored_valueLabel" type="Label" parent="Node2D/scored_value"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_o42i2")
+theme_override_font_sizes/font_size = 16
+text = "TYPE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score_type_box" type="PanelContainer" parent="Node2D"]
+z_index = 1
+z_as_relative = false
+clip_contents = true
+offset_left = -107.0
+offset_top = -12.0
+offset_right = -27.0
+offset_bottom = 11.0
+pivot_offset = Vector2(40, 11.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_pt0h5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_bba4x")
+
+[node name="Label" type="Label" parent="Node2D/score_type_box"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_o42i2")
+theme_override_font_sizes/font_size = 16
+text = "TYPE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mult" type="PanelContainer" parent="Node2D"]
+z_index = 1
+z_as_relative = false
+custom_minimum_size = Vector2(45, 10)
+offset_left = 49.0
+offset_top = -12.0
+offset_right = 106.0
+offset_bottom = 11.0
+pivot_offset = Vector2(28.5, 11.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_pt0h5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_jnxmk")
+
+[node name="multLabel" type="Label" parent="Node2D/mult"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_o42i2")
+theme_override_font_sizes/font_size = 16
+text = "MULT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score" type="PanelContainer" parent="Node2D"]
+z_index = 1
+z_as_relative = false
+custom_minimum_size = Vector2(45, 10)
+offset_left = -25.0
+offset_top = -12.0
+offset_right = 33.0
+offset_bottom = 11.0
+pivot_offset = Vector2(28.5, 11.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_pt0h5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_73k05")
+
+[node name="scoreLabel" type="Label" parent="Node2D/score"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
+theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_o42i2")
+theme_override_font_sizes/font_size = 16
+text = "SCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="backdrop" type="PanelContainer" parent="Node2D"]
+z_as_relative = false
+offset_left = -112.0
+offset_top = -17.0
+offset_right = 111.0
+offset_bottom = 22.0
+pivot_offset = Vector2(111.5, 16.5)
+theme = ExtResource("4_pt0h5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_80lvl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Node2D"]
+z_index = 100
+custom_minimum_size = Vector2(60, 0)
+offset_left = 101.0
+offset_top = -10.0
+offset_right = 191.0
+offset_bottom = 10.0
+pivot_offset = Vector2(30, 10)
+theme_override_constants/separation = -6
+script = ExtResource("3_e2q4m")
+
+[node name="Control" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("4_3tyux")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control2" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control2"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("4_3tyux")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control3" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control3"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("4_3tyux")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control4" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control4"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("4_3tyux")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control5" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control5"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("4_3tyux")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Control6" type="Control" parent="Node2D/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/HBoxContainer/Control6"]
+position = Vector2(10, 10)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("4_3tyux")
+region_rect = Rect2(240, 0, 40, 40)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = 144.5
+offset_top = -10.0
+offset_right = 167.5
+offset_bottom = 13.0
+scale = Vector2(0.8, 0.8)
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_constants/line_spacing = 5
+theme_override_fonts/font = ExtResource("2_o42i2")
+theme_override_font_sizes/font_size = 32
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="test" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 6.5
+offset_top = -47.0
+offset_right = 46.5
+offset_bottom = -7.0
+
+[node name="score2" type="PanelContainer" parent="test"]
+z_index = 1
+custom_minimum_size = Vector2(45, 10)
+layout_mode = 0
+offset_left = -2.0
+offset_top = 69.0
+offset_right = 73.0
+offset_bottom = 92.0
+pivot_offset = Vector2(22.5, 7.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_pt0h5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_uetl7")
+
+[node name="scoreLabel" type="Label" parent="test/score2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_o42i2")
+theme_override_font_sizes/font_size = 16
+text = "SCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score3" type="PanelContainer" parent="test"]
+z_index = 1
+layout_mode = 0
+offset_left = 75.0
+offset_top = 69.0
+offset_right = 135.0
+offset_bottom = 92.0
+pivot_offset = Vector2(22.5, 7.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_pt0h5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_f8qyp")
+
+[node name="scoreLabel" type="Label" parent="test/score3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_o42i2")
+theme_override_font_sizes/font_size = 16
+text = "SCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score4" type="PanelContainer" parent="test"]
+z_index = 1
+layout_mode = 0
+offset_left = 151.0
+offset_top = 69.0
+offset_right = 211.0
+offset_bottom = 92.0
+pivot_offset = Vector2(22.5, 7.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_pt0h5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_iic11")
+
+[node name="scoreLabel" type="Label" parent="test/score4"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.180392, 0.133333, 0.184314, 1)
+theme_override_fonts/font = ExtResource("2_o42i2")
+theme_override_font_sizes/font_size = 16
+text = "SCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="X2" type="Sprite2D" parent="test"]
+z_index = 2
+position = Vector2(143, 80)
+texture = ExtResource("5_2khie")
+
+[node name="backdrop2" type="PanelContainer" parent="test"]
+layout_mode = 0
+offset_left = -7.0
+offset_top = 64.0
+offset_right = 216.0
+offset_bottom = 97.0
+theme = ExtResource("4_pt0h5")

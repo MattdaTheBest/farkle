@@ -4,6 +4,9 @@ var name : String = "3 Pair"
 
 var LVL : int = 1
 
+var base_score : int = 40
+var base_mult : int = 4
+
 func evaluate(dice : Array):
 	var dice_entered : Array
 	for d in dice:
@@ -33,10 +36,12 @@ func evaluate(dice : Array):
 				break
 				
 		if not breaks_rule:
-			score += 1500
-			used_dice = dice					
+			score = base_score * base_mult
+			used_dice = dice.duplicate()					
 						
 	return [{
-		"score" : score,
-		"used_dice" : used_dice
+		"score": score,
+		"base_score": base_score,
+		"base_mult": base_mult,
+		"used_dice": used_dice
 	}]

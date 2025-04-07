@@ -1,24 +1,24 @@
-[gd_scene load_steps=34 format=3 uid="uid://cua4cyg1ot4os"]
+[gd_scene load_steps=32 format=3 uid="uid://dkxt41uy150ef"]
 
-[ext_resource type="Texture2D" uid="uid://df4bltru215ad" path="res://3rdAttempt/dice/dice/sprites/die.png" id="1_b5e4u"]
-[ext_resource type="Shader" path="res://3rdAttempt/dice/dice/scripts/highLightShader.gdshader" id="2_463vw"]
-[ext_resource type="Texture2D" uid="uid://ujctx57h1i1t" path="res://3rdAttempt/dice/dice/sprites/8_side_die_faces.png" id="2_hyp0b"]
-[ext_resource type="Script" path="res://unrolled_face_name.gd" id="2_qm7f1"]
-[ext_resource type="Texture2D" uid="uid://c2dcdnkwnc3am" path="res://3rdAttempt/dice/dice/sprites/rotating_dice.png" id="3_golai"]
-[ext_resource type="Texture2D" uid="uid://nd1fgukfyvik" path="res://3rdAttempt/dice/dice/sprites/unrolled_dice.png" id="4_xd6nm"]
-[ext_resource type="Theme" uid="uid://dtvwfj125ab5s" path="res://3rdAttempt/dice/dice/sprites/panelTheme.tres" id="5_4svll"]
-[ext_resource type="PackedScene" uid="uid://cls0wakep4jwl" path="res://3rdAttempt/scenes/unrolled_face.tscn" id="5_7i4im"]
-[ext_resource type="Texture2D" uid="uid://d2tq3okkcemnl" path="res://3rdAttempt/dice/dice/sprites/uiComponents.png" id="6_j3i5s"]
-[ext_resource type="FontFile" uid="uid://snmklaelrf1e" path="res://fonts/ByteBounce.ttf" id="8_2tpq4"]
-[ext_resource type="Shader" path="res://3rdAttempt/dice/dice/shadow.gdshader" id="11_vhuws"]
+[ext_resource type="Texture2D" uid="uid://df4bltru215ad" path="res://3rdAttempt/dice/dice/sprites/die.png" id="1_rj0vd"]
+[ext_resource type="Shader" path="res://3rdAttempt/dice/dice/scripts/highLightShader.gdshader" id="2_yu2ox"]
+[ext_resource type="Texture2D" uid="uid://devydsnib3c07" path="res://3rdAttempt/dice/dice/sprites/high_four_sided_faces.png" id="3_4m7hr"]
+[ext_resource type="Texture2D" uid="uid://c2dcdnkwnc3am" path="res://3rdAttempt/dice/dice/sprites/rotating_dice.png" id="4_1pqel"]
+[ext_resource type="Shader" path="res://3rdAttempt/dice/dice/shadow.gdshader" id="5_rfunh"]
+[ext_resource type="Theme" uid="uid://dtvwfj125ab5s" path="res://3rdAttempt/dice/dice/sprites/panelTheme.tres" id="7_ebrlt"]
+[ext_resource type="Texture2D" uid="uid://d2tq3okkcemnl" path="res://3rdAttempt/dice/dice/sprites/uiComponents.png" id="8_s11jn"]
+[ext_resource type="Script" path="res://unrolled_face_name.gd" id="9_xlx2y"]
+[ext_resource type="FontFile" uid="uid://snmklaelrf1e" path="res://fonts/ByteBounce.ttf" id="10_cb4kx"]
+[ext_resource type="Texture2D" uid="uid://nd1fgukfyvik" path="res://3rdAttempt/dice/dice/sprites/unrolled_dice.png" id="11_icg36"]
+[ext_resource type="PackedScene" uid="uid://cls0wakep4jwl" path="res://3rdAttempt/scenes/unrolled_face.tscn" id="12_bhmnk"]
 
 [sub_resource type="GDScript" id="GDScript_1gxl3"]
 script/source = "extends DiceBaseScript
-class_name Eighter
+class_name HighFourDie
 
 @export var dice_name : String
-@export var face_values : Array = [1, 2, 3, 4, 5, 6, 1, 2]
-@export var weighted_value : Array = [10,10,10,10,10,10,10,10]
+@export var face_values : Array = [3, 4, 5, 6]
+@export var weighted_value : Array = [10,10,10,10]
 
 @onready var highlight: Sprite2D = $highlight
 @onready var dice_animations: AnimatedSprite2D = $Node2D/diceAnimations
@@ -211,108 +211,94 @@ func calculate_drag_positions():
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rma3p"]
 resource_local_to_scene = true
-shader = ExtResource("2_463vw")
+shader = ExtResource("2_yu2ox")
 shader_parameter/clr = Color(1, 1, 1, 0)
 shader_parameter/type = 2
 shader_parameter/thickness = 2.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_innmr"]
-atlas = ExtResource("2_hyp0b")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai7bd"]
+atlas = ExtResource("3_4m7hr")
 region = Rect2(0, 0, 40, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i7yon"]
-atlas = ExtResource("2_hyp0b")
+[sub_resource type="AtlasTexture" id="AtlasTexture_8r2sx"]
+atlas = ExtResource("3_4m7hr")
 region = Rect2(40, 0, 40, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vyggw"]
-atlas = ExtResource("2_hyp0b")
+[sub_resource type="AtlasTexture" id="AtlasTexture_213e3"]
+atlas = ExtResource("3_4m7hr")
 region = Rect2(80, 0, 40, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yd6b5"]
-atlas = ExtResource("2_hyp0b")
+[sub_resource type="AtlasTexture" id="AtlasTexture_37bpg"]
+atlas = ExtResource("3_4m7hr")
 region = Rect2(120, 0, 40, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s10dy"]
-atlas = ExtResource("2_hyp0b")
+[sub_resource type="AtlasTexture" id="AtlasTexture_20i7y"]
+atlas = ExtResource("3_4m7hr")
 region = Rect2(160, 0, 40, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3qgq6"]
-atlas = ExtResource("2_hyp0b")
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wwt6"]
+atlas = ExtResource("3_4m7hr")
 region = Rect2(200, 0, 40, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uieqn"]
-atlas = ExtResource("2_hyp0b")
+[sub_resource type="AtlasTexture" id="AtlasTexture_jut1o"]
+atlas = ExtResource("3_4m7hr")
 region = Rect2(240, 0, 40, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5nuef"]
-atlas = ExtResource("2_hyp0b")
-region = Rect2(280, 0, 40, 40)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nwran"]
-atlas = ExtResource("2_hyp0b")
-region = Rect2(320, 0, 40, 40)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_q8qi8"]
-atlas = ExtResource("3_golai")
+atlas = ExtResource("4_1pqel")
 region = Rect2(0, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6qo6w"]
-atlas = ExtResource("3_golai")
+atlas = ExtResource("4_1pqel")
 region = Rect2(48, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xlu41"]
-atlas = ExtResource("3_golai")
+atlas = ExtResource("4_1pqel")
 region = Rect2(96, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_13te8"]
-atlas = ExtResource("3_golai")
+atlas = ExtResource("4_1pqel")
 region = Rect2(144, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8pfuo"]
-atlas = ExtResource("3_golai")
+atlas = ExtResource("4_1pqel")
 region = Rect2(192, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_umiet"]
-atlas = ExtResource("3_golai")
+atlas = ExtResource("4_1pqel")
 region = Rect2(240, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6qo0l"]
-atlas = ExtResource("3_golai")
+atlas = ExtResource("4_1pqel")
 region = Rect2(288, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tk8c7"]
-atlas = ExtResource("3_golai")
+atlas = ExtResource("4_1pqel")
 region = Rect2(336, 0, 48, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_13ip4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_innmr")
+"texture": SubResource("AtlasTexture_ai7bd")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i7yon")
+"texture": SubResource("AtlasTexture_8r2sx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vyggw")
+"texture": SubResource("AtlasTexture_213e3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yd6b5")
+"texture": SubResource("AtlasTexture_37bpg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s10dy")
+"texture": SubResource("AtlasTexture_20i7y")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3qgq6")
+"texture": SubResource("AtlasTexture_5wwt6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uieqn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5nuef")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nwran")
+"texture": SubResource("AtlasTexture_jut1o")
 }],
 "loop": true,
 "name": &"faces",
@@ -373,12 +359,12 @@ animations = [{
 }]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_guntb"]
-shader = ExtResource("11_vhuws")
+shader = ExtResource("5_rfunh")
 shader_parameter/shadow_offset = Vector2(10, 10)
 shader_parameter/shadow_color = Color(0, 0, 0, 0.3)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qghlp"]
-texture = ExtResource("6_j3i5s")
+texture = ExtResource("8_s11jn")
 texture_margin_left = 6.0
 texture_margin_top = 6.0
 texture_margin_right = 6.0
@@ -399,7 +385,23 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 script = SubResource("GDScript_1gxl3")
-dice_name = "Eighter"
+dice_name = "High Four"
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+editor_only = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 remote_path = NodePath("../Node2D/diceAnimations")
@@ -413,12 +415,11 @@ modulate = Color(1, 1, 1, 0)
 top_level = true
 position = Vector2(36, 36)
 scale = Vector2(1.5, 1.5)
-texture = ExtResource("1_b5e4u")
+texture = ExtResource("1_rj0vd")
 region_enabled = true
 region_rect = Rect2(40, 0, 40, 40)
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2(24, 26)
 
 [node name="diceAnimations" type="AnimatedSprite2D" parent="Node2D"]
 top_level = true
@@ -434,7 +435,7 @@ show_behind_parent = true
 material = SubResource("ShaderMaterial_guntb")
 position = Vector2(-7.33333, 2.66667)
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("2_hyp0b")
+texture = ExtResource("3_4m7hr")
 region_enabled = true
 region_rect = Rect2(0, 0, 40, 40)
 
@@ -448,18 +449,18 @@ position = Vector2(-24, -24)
 [node name="PanelContainer" type="PanelContainer" parent="Node2D/diceAnimations/Node2D"]
 z_index = 1
 offset_right = 86.0
-offset_bottom = 24.0
+offset_bottom = 26.0
 scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(43, 12)
-theme = ExtResource("5_4svll")
+theme = ExtResource("7_ebrlt")
 theme_override_styles/panel = SubResource("StyleBoxTexture_qghlp")
-script = ExtResource("2_qm7f1")
+script = ExtResource("9_xlx2y")
 
 [node name="Label" type="Label" parent="Node2D/diceAnimations/Node2D/PanelContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
 theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
-theme_override_fonts/font = ExtResource("8_2tpq4")
+theme_override_fonts/font = ExtResource("10_cb4kx")
 theme_override_font_sizes/font_size = 16
 text = "   10% "
 horizontal_alignment = 1
@@ -486,7 +487,7 @@ editor_only = false
 [node name="unfoldedVersion" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(24, -80)
-texture = ExtResource("4_xd6nm")
+texture = ExtResource("11_icg36")
 
 [node name="select" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -515,91 +516,91 @@ theme_override_constants/separation = 4
 custom_minimum_size = Vector2(86, 0)
 layout_mode = 2
 
-[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face7" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face7" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face8" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face8" parent="face_values_weights/HBoxContainer/VBoxContainer" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="face_values_weights/HBoxContainer"]
 layout_mode = 2
 
-[node name="unrolled_face" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="unrolled_face2" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face2" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer2" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="face_values_weights/HBoxContainer"]
 layout_mode = 2
 
-[node name="unrolled_face" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="unrolled_face2" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face2" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer3" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
 [node name="VBoxContainer4" type="VBoxContainer" parent="face_values_weights/HBoxContainer"]
 layout_mode = 2
 
-[node name="unrolled_face" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="unrolled_face2" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face2" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face3" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face4" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face5" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
-[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("5_7i4im")]
+[node name="unrolled_face6" parent="face_values_weights/HBoxContainer/VBoxContainer4" instance=ExtResource("12_bhmnk")]
 layout_mode = 2
 
 [connection signal="animation_finished" from="Node2D/diceAnimations" to="." method="_on_animated_sprite_2d_animation_finished"]

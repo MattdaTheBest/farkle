@@ -4,6 +4,9 @@ var name : String = "Single Five"
 
 var LVL : int = 1
 
+var base_score : int = 5
+var base_mult : int = 1
+
 func evaluate(dice : Array):
 	var dice_entered : Array
 	for d in dice:
@@ -17,9 +20,11 @@ func evaluate(dice : Array):
 	if fives.is_empty():
 		return []
 	
-	var score = fives.size() * 50
+	var score = base_score * base_mult
 		
 	return [{
-		"score" : score,
-		"used_dice" : fives
+		"score": score,
+		"base_score": base_score,
+		"base_mult": base_mult,
+		"used_dice": fives
 	}]

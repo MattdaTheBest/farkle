@@ -4,6 +4,9 @@ var name : String = "Full House"
 
 var LVL : int = 1
 
+var base_score : int = 50
+var base_mult : int = 4
+
 func evaluate(dice: Array) -> Array:
 	var dice_values: Array = []
 	var counted_values: Dictionary = {}
@@ -33,11 +36,13 @@ func evaluate(dice: Array) -> Array:
 
 	if triple_val != null and pair_val != null:
 		
-		score += 1500
+		score = base_score * base_mult
 		
 		var used_dice = value_to_dice[triple_val].slice(0, 4) + value_to_dice[pair_val].slice(0, 2)
 		return [{
 			"score": score,
+			"base_score": base_score,
+			"base_mult": base_mult,
 			"used_dice": used_dice
 		}]
 

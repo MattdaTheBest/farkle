@@ -49,18 +49,18 @@ region_rect = Rect2(81, 1, 14, 15)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jnxmk"]
 texture = ExtResource("6_d8aur")
 texture_margin_left = 6.0
-texture_margin_top = 6.0
+texture_margin_top = 5.89847
 texture_margin_right = 6.0
-texture_margin_bottom = 9.0
-region_rect = Rect2(1, 0, 14, 16)
+texture_margin_bottom = 8.0
+region_rect = Rect2(1, 1, 14, 15)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bba4x"]
 texture = ExtResource("6_d8aur")
 texture_margin_left = 6.0
 texture_margin_top = 6.0
 texture_margin_right = 6.0
-texture_margin_bottom = 9.0
-region_rect = Rect2(33, 0, 14, 16)
+texture_margin_bottom = 8.0
+region_rect = Rect2(33, 1, 14, 15)
 
 [node name="Player" type="Control"]
 layout_mode = 3
@@ -112,10 +112,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -184.0
-offset_top = 76.0
-offset_right = 184.0
-offset_bottom = 124.0
+offset_left = -154.0
+offset_top = 28.0
+offset_right = 154.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -270,9 +270,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 52.0
+offset_left = 55.0
 offset_top = -121.0
-offset_right = 52.0
+offset_right = 55.0
 offset_bottom = -121.0
 grow_vertical = 2
 
@@ -286,6 +286,7 @@ offset_right = 251.0
 offset_bottom = 281.0
 
 [node name="draw" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -293,9 +294,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -50.0
-offset_top = 172.5
+offset_top = 125.0
 offset_right = 50.0
-offset_bottom = 200.5
+offset_bottom = 152.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1e-05, 1e-05)
@@ -313,6 +314,7 @@ text = "Draw
 "
 
 [node name="score_options" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -320,9 +322,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -102.0
-offset_top = 172.5
+offset_top = 125.0
 offset_right = 102.0
-offset_bottom = 200.5
+offset_bottom = 152.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1e-05, 1e-05)
@@ -343,6 +345,7 @@ theme = ExtResource("4_6ovsf")
 text = "Score & Pass"
 
 [node name="rollanddiscard" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -350,9 +353,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -102.0
-offset_top = 172.5
+offset_top = 125.0
 offset_right = 102.0
-offset_bottom = 200.5
+offset_bottom = 152.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1e-05, 1e-05)
@@ -380,18 +383,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -78.0
-offset_top = 143.0
-offset_right = 78.0
-offset_bottom = 171.0
+offset_left = -67.0
+offset_top = 95.0
+offset_right = 67.0
+offset_bottom = 123.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(102, 44.5)
-
-[node name="left" type="Button" parent="sorting_options"]
-layout_mode = 2
-theme = ExtResource("5_etkoj")
-text = "<"
 
 [node name="bytype" type="Button" parent="sorting_options"]
 custom_minimum_size = Vector2(65, 0)
@@ -457,15 +455,27 @@ offset_bottom = 688.0
 theme = ExtResource("4_2rgcs")
 theme_override_styles/panel = SubResource("StyleBoxTexture_qghlp")
 
+[node name="Panel2" type="Panel" parent="."]
+visible = false
+modulate = Color(0.176419, 0.176419, 0.176419, 0.611765)
+z_index = -1
+layout_mode = 0
+offset_left = 293.0
+offset_top = 40.0
+offset_right = 823.0
+offset_bottom = 148.0
+theme = ExtResource("4_2rgcs")
+theme_override_styles/panel = SubResource("StyleBoxTexture_cxy0g")
+
 [node name="discard" type="PanelContainer" parent="."]
 z_index = 1
 z_as_relative = false
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 0
-offset_left = 39.0
-offset_top = 437.0
-offset_right = 139.0
-offset_bottom = 472.0
+offset_left = 41.0
+offset_top = 512.0
+offset_right = 141.0
+offset_bottom = 547.0
 pivot_offset = Vector2(28.5, 11.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -488,10 +498,10 @@ z_index = 1
 z_as_relative = false
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 0
-offset_left = 141.0
-offset_top = 437.0
-offset_right = 241.0
-offset_bottom = 472.0
+offset_left = 143.0
+offset_top = 512.0
+offset_right = 243.0
+offset_bottom = 547.0
 pivot_offset = Vector2(28.5, 11.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -528,41 +538,11 @@ offset_right = 937.0
 offset_bottom = 331.0
 theme = ExtResource("4_6ovsf")
 
-[node name="BUST" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -60.0
-offset_top = -32.0
-offset_right = 60.0
-offset_bottom = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("4_2rgcs")
-theme_override_styles/panel = SubResource("StyleBoxTexture_jnxmk")
-
-[node name="bustlabel" type="Label" parent="BUST"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
-theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_2icwn")
-theme_override_font_sizes/font_size = 48
-text = "BUST!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [connection signal="pressed" from="draw/draw" to="." method="_on_draw_pressed"]
 [connection signal="pressed" from="score_options/score" to="." method="_on_score_pressed"]
 [connection signal="pressed" from="score_options/scoreANDpass" to="." method="_on_score_pressed"]
 [connection signal="pressed" from="rollanddiscard/discard" to="." method="_on_discard_pressed"]
 [connection signal="pressed" from="rollanddiscard/roll" to="." method="_on_roll_pressed"]
-[connection signal="pressed" from="sorting_options/left" to="." method="_on_left_pressed"]
-[connection signal="toggled" from="sorting_options/left" to="." method="_on_left_toggled"]
 [connection signal="pressed" from="sorting_options/bytype" to="." method="_on_bytype_pressed"]
 [connection signal="pressed" from="sorting_options/byvalue" to="." method="_on_byvalue_pressed"]
 [connection signal="timeout" from="update_timer" to="." method="_on_update_timer_timeout"]

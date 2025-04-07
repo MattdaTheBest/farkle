@@ -23,14 +23,13 @@ Crt="*res://crt.tscn"
 
 [display]
 
-window/size/viewport_width=960
-window/size/viewport_height=540
 window/stretch/mode="canvas_items"
 
 [global_group]
 
 world=""
 unrolled_face=""
+dice=""
 
 [input]
 
