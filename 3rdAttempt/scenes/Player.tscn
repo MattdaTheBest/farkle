@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bj7u8vcs5pvhh"]
+[gd_scene load_steps=17 format=3 uid="uid://bj7u8vcs5pvhh"]
 
 [ext_resource type="Script" path="res://3rdAttempt/player.gd" id="1_mmsx7"]
 [ext_resource type="Shader" path="res://3rdAttempt/scenes/background.gdshader" id="2_hj8m4"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://pq0pk81spjol" path="res://3rdAttempt/dice/dice/sprites/TESTPANEL.png" id="5_kpwa8"]
 [ext_resource type="Texture2D" uid="uid://d2tq3okkcemnl" path="res://3rdAttempt/dice/dice/sprites/uiComponents.png" id="6_d8aur"]
 [ext_resource type="FontFile" uid="uid://snmklaelrf1e" path="res://fonts/ByteBounce.ttf" id="7_2icwn"]
+[ext_resource type="PackedScene" uid="uid://ckenp4iixjlw5" path="res://sticker_test.tscn" id="10_oawcq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bbkav"]
 shader = ExtResource("2_hj8m4")
@@ -502,7 +503,6 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_bba4x")
 layout_mode = 2
 theme_override_colors/font_color = Color(0.780392, 0.862745, 0.815686, 1)
 theme_override_colors/font_shadow_color = Color(0.180392, 0.133333, 0.184314, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_2icwn")
 theme_override_font_sizes/font_size = 16
 text = "Rounds : 0"
@@ -555,6 +555,9 @@ theme_override_font_sizes/font_size = 48
 text = "BUST!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="stickerTest" parent="." instance=ExtResource("10_oawcq")]
+position = Vector2(564, 231)
 
 [connection signal="pressed" from="draw/draw" to="." method="_on_draw_pressed"]
 [connection signal="pressed" from="score_options/score" to="." method="_on_score_pressed"]
