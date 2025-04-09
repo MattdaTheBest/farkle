@@ -1,8 +1,65 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckenp4iixjlw5"]
+[gd_scene load_steps=12 format=3 uid="uid://ckenp4iixjlw5"]
 
 [ext_resource type="Script" path="res://sticker_test.gd" id="1_73px0"]
 [ext_resource type="Texture2D" uid="uid://dticw7km2ma37" path="res://3rdAttempt/dice/dice/sprites/dice_all_faces.png" id="2_4s6y4"]
-[ext_resource type="Texture2D" uid="uid://r8xj0h0hg7tf" path="res://3rdAttempt/dice/dice/sprites/odd_die_faces.png" id="3_01ucp"]
+[ext_resource type="Texture2D" uid="uid://ceojsewq6n1lc" path="res://3rdAttempt/dice/dice/sprites/weight.png" id="3_rs5xo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmbun"]
+atlas = ExtResource("2_4s6y4")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g1k4"]
+atlas = ExtResource("2_4s6y4")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_403wu"]
+atlas = ExtResource("2_4s6y4")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6g0ux"]
+atlas = ExtResource("2_4s6y4")
+region = Rect2(120, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8b6l"]
+atlas = ExtResource("2_4s6y4")
+region = Rect2(160, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmshc"]
+atlas = ExtResource("2_4s6y4")
+region = Rect2(200, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwfpu"]
+atlas = ExtResource("2_4s6y4")
+region = Rect2(240, 0, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vjipg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmbun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1g1k4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_403wu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6g0ux")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8b6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmshc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwfpu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="stickerTest" type="Node2D"]
 script = ExtResource("1_73px0")
@@ -12,11 +69,24 @@ offset_top = 34.0
 offset_right = 32.0
 offset_bottom = 42.0
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(92, 18)
+sprite_frames = SubResource("SpriteFrames_vjipg")
+autoplay = "default"
+frame_progress = 0.983976
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 1
+z_as_relative = false
+position = Vector2(17, 14)
+texture = ExtResource("3_rs5xo")
+region_rect = Rect2(0, 0, 40, 40)
+
 [node name="Sprite2D3" type="Sprite2D" parent="."]
-position = Vector2(52, 17)
+position = Vector2(51, 16)
 texture = ExtResource("2_4s6y4")
 region_enabled = true
-region_rect = Rect2(0, 0, 40, 40)
+region_rect = Rect2(0, 0, 32, 32)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 custom_minimum_size = Vector2(32, 32)
@@ -30,15 +100,9 @@ size = Vector2i(32, 32)
 render_target_update_mode = 4
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport"]
+z_as_relative = false
 position = Vector2(16, 16)
 texture = ExtResource("2_4s6y4")
-region_enabled = true
-region_rect = Rect2(0, 0, 40, 40)
-
-[node name="Sprite2D2" type="Sprite2D" parent="SubViewportContainer/SubViewport"]
-position = Vector2(21, 11)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_01ucp")
 region_enabled = true
 region_rect = Rect2(0, 0, 40, 40)
 
